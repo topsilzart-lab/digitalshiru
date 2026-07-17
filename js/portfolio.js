@@ -52,6 +52,38 @@
     if (firstReal) firstReal.click();
   }
 
+  /* ---- TikTok lightbox — official embed, loaded on click ---- */
+  const ttCards = document.querySelectorAll('.tt-card');
+  if (ttCards.length) {
+    let ttLb = document.getElementById('tt-lightbox');
+    if (!ttLb) {
+      ttLb = document.createElement('div');
+      ttLb.id = 'tt-lightbox';
+      ttLb.innerHTML =
+        '<div class="tt-lb-frame">' +
+          '<button class="tt-lb-close" aria-label="Close">✕ Close</button>' +
+          '<iframe allow="autoplay; encrypted-media; fullscreen" scrolling="no"></iframe>' +
+        '</div>';
+      document.body.appendChild(ttLb);
+      const frame = ttLb.querySelector('.tt-lb-frame');
+      const iframe = ttLb.querySelector('iframe');
+      const close = () => { ttLb.style.display = 'none'; iframe.src = 'about:blank'; };
+      ttLb.addEventListener('click', close);
+      frame.addEventListener('click', e => e.stopPropagation());
+      ttLb.querySelector('.tt-lb-close').addEventListener('click', close);
+      document.addEventListener('keydown', e => { if (e.key === 'Escape' && ttLb.style.display === 'grid') close(); });
+      ttLb._iframe = iframe;
+    }
+    ttCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.dataset.tiktok;
+        if (!id) return;
+        ttLb._iframe.src = 'https://www.tiktok.com/embed/v2/' + id;
+        ttLb.style.display = 'grid';
+      });
+    });
+  }
+
   /* ---- Lightbox for Design + Social (opt-in via [data-lightbox]) ---- */
   const lightboxItems = document.querySelectorAll('[data-lightbox]');
   if (lightboxItems.length) {
