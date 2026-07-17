@@ -1,0 +1,11 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local tooling settings (machine-specific)
+.claude/settings.local.json
+
+# Node
+node_modules/
+npm-debug.log*
