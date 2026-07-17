@@ -1,0 +1,318 @@
+/* ============================================================
+   DIGITAL SHIRU — PORTFOLIO SHOWCASE SYSTEM
+   Five category sections: Websites · Spline · Design ·
+   Illustrations · Social. Expedition voice, no HUD/tactical.
+   Reuses the site's colour tokens (--gold, --ember, --paper…).
+============================================================ */
+
+/* ---- Shared category header ---- */
+.cat-head {
+  max-width: 1240px;
+  margin: 0 auto clamp(38px, 5vw, 64px);
+  padding: 0 clamp(20px, 5vw, 52px);
+  position: relative;
+}
+.cat-head-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.cat-index {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: 0.42em;
+  color: var(--ember);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.cat-index .cat-index-num { color: var(--gold); }
+.cat-head-rule {
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, rgba(232,184,101,0.42), rgba(232,184,101,0.04));
+}
+.cat-head-count {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--stone);
+  white-space: nowrap;
+}
+.cat-title {
+  font-family: 'Cinzel', serif;
+  font-weight: 500;
+  font-size: clamp(30px, 4.4vw, 54px);
+  line-height: 1.06;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+  margin: 0 0 16px;
+}
+.cat-title .accent { color: var(--gold); font-style: italic; font-weight: 400; }
+.cat-lede {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.7;
+  color: var(--paper-muted);
+  max-width: 58ch;
+  margin: 0;
+}
+
+/* ---- Section shell spacing ---- */
+.pf-section { padding: clamp(88px, 11vw, 150px) 0; position: relative; }
+.pf-wrap { max-width: 1240px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 52px); }
+
+/* ============================================================
+   1 · WEBSITES  (category intro; live embeds keep own styling)
+============================================================ */
+#websites .cat-head { margin-bottom: clamp(30px, 4vw, 48px); }
+
+/* ============================================================
+   2 · SPLINE ANIMATIONS
+   Featured 3D stage + thumbnail rail
+============================================================ */
+.spline-stage-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 28px;
+  align-items: stretch;
+}
+.spline-stage {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  min-height: 540px;
+  background:
+    radial-gradient(120% 90% at 50% 20%, rgba(232,184,101,0.08), transparent 60%),
+    linear-gradient(160deg, #101a16, #080d0a 70%);
+  border: 1px solid rgba(232,184,101,0.14);
+  box-shadow: 0 40px 90px -50px rgba(0,0,0,0.9), inset 0 1px 0 rgba(232,184,101,0.06);
+}
+.spline-stage spline-viewer,
+.spline-stage iframe { width: 100%; height: 100%; display: block; border: 0; }
+.spline-stage-inner { position: absolute; inset: 0; }
+
+/* Animated placeholder — a floating orbit relic until a scene URL lands */
+.spline-ph { position: absolute; inset: 0; display: grid; place-items: center; }
+.spline-ph-orbit {
+  position: relative;
+  width: min(46%, 300px);
+  aspect-ratio: 1;
+  animation: spline-float 7s ease-in-out infinite;
+}
+.spline-ph-orbit::before,
+.spline-ph-orbit::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(232,184,101,0.28);
+}
+.spline-ph-orbit::before { transform: rotateX(72deg); }
+.spline-ph-orbit::after  { transform: rotateY(72deg); border-color: rgba(212,118,58,0.3); }
+.spline-ph-core {
+  position: absolute; inset: 34%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--gold-hi), var(--ember) 60%, #6a3a10);
+  box-shadow: 0 0 60px rgba(232,184,101,0.4);
+  animation: spline-pulse 3.4s ease-in-out infinite;
+}
+.spline-ph-ring {
+  position: absolute; inset: 8%;
+  border-radius: 50%;
+  border: 1px dashed rgba(232,184,101,0.35);
+  animation: spline-spin 18s linear infinite;
+}
+@keyframes spline-float { 0%,100% { transform: translateY(-10px); } 50% { transform: translateY(10px); } }
+@keyframes spline-pulse { 0%,100% { transform: scale(0.94); opacity:0.85; } 50% { transform: scale(1.06); opacity:1; } }
+@keyframes spline-spin  { to { transform: rotate(360deg); } }
+.spline-ph-label {
+  position: absolute; bottom: 26px; left: 0; right: 0;
+  text-align: center;
+  font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: 0.24em;
+  text-transform: uppercase; color: var(--stone);
+}
+
+.spline-stage-caption {
+  position: absolute; left: 22px; bottom: 20px; z-index: 3;
+  pointer-events: none;
+}
+.spline-stage-caption .ssc-title {
+  font-family: 'Cinzel', serif; font-size: 22px; color: var(--paper);
+  text-shadow: 0 2px 20px rgba(0,0,0,0.8);
+}
+.spline-stage-caption .ssc-sub {
+  font-family: 'Inter', sans-serif; font-size: 13px; color: var(--paper-muted); font-weight: 300;
+}
+.spline-live-tag {
+  position: absolute; top: 18px; right: 18px; z-index: 3;
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  background: rgba(8,13,10,0.6); backdrop-filter: blur(6px);
+  border: 1px solid rgba(232,184,101,0.24); border-radius: 999px; padding: 6px 12px;
+}
+.spline-live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 8px var(--gold); animation: spline-pulse 2s infinite; }
+
+/* Thumb rail */
+.spline-rail { display: flex; flex-direction: column; gap: 14px; }
+.spline-thumb {
+  position: relative;
+  border-radius: 6px; overflow: hidden; cursor: pointer;
+  aspect-ratio: 16/10;
+  border: 1px solid rgba(232,184,101,0.12);
+  background: linear-gradient(150deg, #16211c, #0a110d);
+  transition: border-color .35s, transform .35s;
+}
+.spline-thumb:hover { transform: translateY(-3px); border-color: rgba(232,184,101,0.4); }
+.spline-thumb.active { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold), 0 18px 40px -22px rgba(232,184,101,0.5); }
+.spline-thumb-ph { position: absolute; inset: 0; display: grid; place-items: center; }
+.spline-thumb-ph svg { width: 40%; opacity: 0.5; }
+.spline-thumb-label {
+  position: absolute; left: 12px; bottom: 10px;
+  font-family: 'Inter', sans-serif; font-size: 12px; color: var(--paper);
+  letter-spacing: 0.04em; text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+}
+.spline-rail-note {
+  font-family: 'Inter', sans-serif; font-size: 12px; color: var(--stone);
+  line-height: 1.5; padding: 4px 2px;
+}
+
+/* ============================================================
+   3 · DESIGN  — gallery grid with hover reveal + lightbox
+============================================================ */
+.design-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 18px;
+  grid-auto-flow: dense;
+}
+.design-item {
+  position: relative;
+  border-radius: 7px; overflow: hidden; cursor: pointer;
+  border: 1px solid rgba(232,184,101,0.12);
+  background: #0d1511;
+  min-height: 220px;
+  transition: transform .5s var(--ease, cubic-bezier(.22,1,.36,1)), border-color .5s;
+}
+.design-item:hover { transform: translateY(-5px); border-color: rgba(232,184,101,0.4); }
+.design-item.col-6 { grid-column: span 6; }
+.design-item.col-4 { grid-column: span 4; }
+.design-item.col-8 { grid-column: span 8; }
+.design-item.row-2 { grid-row: span 2; }
+.design-item img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease, cubic-bezier(.22,1,.36,1)); }
+.design-item:hover img { transform: scale(1.05); }
+
+/* animated placeholder fill */
+.design-ph {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(135deg, rgba(232,184,101,0.08), rgba(212,118,58,0.05)),
+    #0d1511;
+  overflow: hidden;
+}
+.design-ph::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(232,184,101,0.12) 50%, transparent 70%);
+  transform: translateX(-100%);
+  animation: pf-shimmer 3.2s ease-in-out infinite;
+}
+@keyframes pf-shimmer { to { transform: translateX(100%); } }
+.design-ph-glyph { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0.35; color: var(--gold); }
+.design-ph-glyph svg { width: 42px; height: 42px; }
+
+.design-overlay {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 20px;
+  background: linear-gradient(180deg, transparent 45%, rgba(8,13,10,0.9));
+  opacity: 0; transform: translateY(8px);
+  transition: opacity .4s, transform .4s;
+}
+.design-item:hover .design-overlay { opacity: 1; transform: none; }
+.design-tag {
+  font-family: 'Inter', sans-serif; font-size: 10.5px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 5px;
+}
+.design-name { font-family: 'Cinzel', serif; font-size: 19px; color: var(--paper); line-height: 1.15; }
+
+/* ============================================================
+   4 · ILLUSTRATIONS (category intro; carousel keeps own styling)
+============================================================ */
+#illustrations-cat .cat-head { margin-bottom: clamp(24px, 3vw, 40px); }
+
+/* ============================================================
+   5 · SOCIAL MEDIA — portrait cards, staggered gallery
+============================================================ */
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 20px;
+}
+.social-card {
+  position: relative;
+  aspect-ratio: 4/5;
+  border-radius: 9px; overflow: hidden; cursor: pointer;
+  border: 1px solid rgba(232,184,101,0.12);
+  background: #0d1511;
+  transition: transform .5s var(--ease, cubic-bezier(.22,1,.36,1)), border-color .5s, box-shadow .5s;
+}
+.social-card:nth-child(even) { transform: translateY(22px); }
+.social-card:hover { transform: translateY(-6px); border-color: rgba(232,184,101,0.42); box-shadow: 0 30px 60px -34px rgba(0,0,0,0.9); }
+.social-card:nth-child(even):hover { transform: translateY(16px); }
+.social-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease, cubic-bezier(.22,1,.36,1)); }
+.social-card:hover img { transform: scale(1.06); }
+
+.social-ph { position: absolute; inset: 0; overflow: hidden; }
+.social-ph-1 { background: linear-gradient(160deg, #1c2b24, #0a110d); }
+.social-ph-2 { background: linear-gradient(160deg, #2a2119, #0d0a08); }
+.social-ph-3 { background: linear-gradient(160deg, #1a2430, #0a0e12); }
+.social-ph::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(232,184,101,0.1) 50%, transparent 70%);
+  transform: translateX(-100%); animation: pf-shimmer 3.6s ease-in-out infinite;
+}
+.social-ph-icon { position: absolute; inset: 0; display: grid; place-items: center; color: var(--gold); opacity: 0.32; }
+.social-ph-icon svg { width: 40px; height: 40px; }
+
+.social-meta {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 18px;
+  background: linear-gradient(180deg, transparent 50%, rgba(8,13,10,0.88));
+}
+.social-platform {
+  position: absolute; top: 14px; left: 14px;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: 'Inter', sans-serif; font-size: 10.5px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--paper);
+  background: rgba(8,13,10,0.55); backdrop-filter: blur(6px);
+  padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(240,232,212,0.14);
+}
+.social-handle { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--paper-muted); margin-bottom: 3px; font-weight: 300; }
+.social-caption { font-family: 'Cinzel', serif; font-size: 16px; color: var(--paper); line-height: 1.2; }
+
+/* ---- pending-content ribbon (shown on placeholder sections) ---- */
+.pf-pending {
+  display: inline-flex; align-items: center; gap: 9px;
+  margin-top: 22px;
+  font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: 0.1em;
+  color: var(--stone);
+  border: 1px dashed rgba(232,184,101,0.25); border-radius: 999px;
+  padding: 8px 16px;
+}
+.pf-pending b { color: var(--gold); font-weight: 500; }
+
+/* ---- responsive ---- */
+@media (max-width: 900px) {
+  .spline-stage-grid { grid-template-columns: 1fr; }
+  .spline-rail { flex-direction: row; overflow-x: auto; }
+  .spline-thumb { min-width: 180px; }
+  .design-item.col-6, .design-item.col-4, .design-item.col-8 { grid-column: span 12; }
+  .design-item.row-2 { grid-row: span 1; }
+}
+@media (max-width: 560px) {
+  .social-card:nth-child(even), .social-card:nth-child(even):hover { transform: none; }
+}
