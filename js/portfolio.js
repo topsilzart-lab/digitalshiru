@@ -6,13 +6,9 @@
 (function () {
   'use strict';
 
-  /* ---- Spline thumbnail rail → swap featured scene ---- */
-  const splineStage = document.getElementById('splineStage');
-  const splineThumbs = document.querySelectorAll('.spline-thumb');
-  if (splineStage && splineThumbs.length) {
-    const titleEl = splineStage.querySelector('.ssc-title');
-    const subEl = splineStage.querySelector('.ssc-sub');
-
+  /* ---- Spline gallery — lazy-load each scene as it scrolls into view ---- */
+  const splineCards = document.querySelectorAll('.spline-card[data-url]');
+  if (splineCards.length) {
     const ensureSplineLib = () => {
       if (document.querySelector('script[data-spline-viewer]')) return;
       const s = document.createElement('script');
@@ -22,42 +18,26 @@
       document.head.appendChild(s);
     };
 
-    const loadScene = (url, title, sub) => {
-      if (!url) return; // placeholder thumbs have no URL yet
+    const loadCard = (card) => {
+      if (card.dataset.loaded) return;
+      card.dataset.loaded = '1';
       ensureSplineLib();
-      let viewer = splineStage.querySelector('spline-viewer');
-      const ph = splineStage.querySelector('.spline-ph');
-      if (ph) ph.style.display = 'none';
-      if (!viewer) {
-        viewer = document.createElement('spline-viewer');
-        viewer.setAttribute('loading-anim-type', 'spinner-small-dark');
-        const inner = splineStage.querySelector('.spline-stage-inner') || splineStage;
-        inner.prepend(viewer);
-      }
-      viewer.setAttribute('url', url);
-      if (titleEl && title) titleEl.textContent = title;
-      if (subEl && sub) subEl.textContent = sub;
+      const viewer = document.createElement('spline-viewer');
+      viewer.setAttribute('url', card.dataset.url);
+      (card.querySelector('.spline-card-stage') || card).appendChild(viewer);
+      const done = () => card.classList.add('is-loaded');
+      viewer.addEventListener('load', done);
+      viewer.addEventListener('load-complete', done);
+      setTimeout(done, 9000); // fallback if the load event never fires
     };
 
-    splineThumbs.forEach(thumb => {
-      thumb.addEventListener('click', () => {
-        splineThumbs.forEach(t => t.classList.remove('active'));
-        thumb.classList.add('active');
-        loadScene(thumb.dataset.url, thumb.dataset.title, thumb.dataset.sub);
-      });
-    });
-
-    // Load the first real scene only once the stage scrolls near view (scenes are heavy)
-    const firstReal = [...splineThumbs].find(t => t.dataset.url);
-    if (firstReal) {
-      if ('IntersectionObserver' in window) {
-        const io = new IntersectionObserver((entries, obs) => {
-          if (entries[0].isIntersecting) { firstReal.click(); obs.disconnect(); }
-        }, { rootMargin: '300px 0px' });
-        io.observe(splineStage);
-      } else {
-        firstReal.click();
-      }
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { loadCard(e.target); io.unobserve(e.target); } });
+      }, { rootMargin: '400px 0px' });
+      splineCards.forEach(c => io.observe(c));
+    } else {
+      splineCards.forEach(loadCard);
     }
   }
 

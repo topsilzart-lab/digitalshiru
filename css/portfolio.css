@@ -70,113 +70,43 @@
 #websites .cat-head { margin-bottom: clamp(30px, 4vw, 48px); }
 
 /* ============================================================
-   2 · SPLINE ANIMATIONS
-   Featured 3D stage + thumbnail rail
+   2 · SPLINE ANIMATIONS — gallery of live 3D embeds
 ============================================================ */
-.spline-stage-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-.spline-stage {
+.spline-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(18px,2.4vw,30px); }
+.spline-card {
   position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-  min-height: 540px;
+  aspect-ratio: 4 / 3;
+  border-radius: 10px; overflow: hidden;
+  border: 1px solid rgba(232,184,101,0.16);
   background:
-    radial-gradient(120% 90% at 50% 20%, rgba(232,184,101,0.08), transparent 60%),
-    linear-gradient(160deg, #101a16, #080d0a 70%);
-  border: 1px solid rgba(232,184,101,0.14);
-  box-shadow: 0 40px 90px -50px rgba(0,0,0,0.9), inset 0 1px 0 rgba(232,184,101,0.06);
+    radial-gradient(120% 90% at 50% 15%, rgba(232,184,101,0.07), transparent 60%),
+    linear-gradient(160deg, #101a16, #080d0a 72%);
+  box-shadow: 0 30px 70px -50px rgba(0,0,0,0.9), inset 0 1px 0 rgba(232,184,101,0.05);
+  transition: border-color .4s, box-shadow .4s, transform .4s;
 }
-.spline-stage spline-viewer,
-.spline-stage iframe { width: 100%; height: 100%; display: block; border: 0; }
-.spline-stage-inner { position: absolute; inset: 0; }
+.spline-card:hover { border-color: rgba(232,184,101,0.4); box-shadow: 0 40px 80px -46px rgba(0,0,0,0.95); }
+.spline-card--featured { grid-column: 1 / -1; aspect-ratio: 16 / 8; }
+.spline-card-stage { position: absolute; inset: 0; z-index: 1; }
+.spline-card-stage spline-viewer { width: 100%; height: 100%; display: block; border: 0; }
 
-/* Animated placeholder — a floating orbit relic until a scene URL lands */
-.spline-ph { position: absolute; inset: 0; display: grid; place-items: center; }
-.spline-ph-orbit {
-  position: relative;
-  width: min(46%, 300px);
-  aspect-ratio: 1;
-  animation: spline-float 7s ease-in-out infinite;
-}
-.spline-ph-orbit::before,
-.spline-ph-orbit::after {
-  content: '';
-  position: absolute; inset: 0;
-  border-radius: 50%;
-  border: 1px solid rgba(232,184,101,0.28);
-}
+/* Animated placeholder — floating orbit until the scene loads */
+.spline-ph { position: absolute; inset: 0; z-index: 0; display: grid; place-items: center; transition: opacity .8s ease; }
+.spline-card.is-loaded .spline-ph { opacity: 0; pointer-events: none; }
+.spline-ph-orbit { position: relative; width: min(38%, 210px); aspect-ratio: 1; animation: spline-float 7s ease-in-out infinite; }
+.spline-ph-orbit::before, .spline-ph-orbit::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(232,184,101,0.28); }
 .spline-ph-orbit::before { transform: rotateX(72deg); }
 .spline-ph-orbit::after  { transform: rotateY(72deg); border-color: rgba(212,118,58,0.3); }
-.spline-ph-core {
-  position: absolute; inset: 34%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, var(--gold-hi), var(--ember) 60%, #6a3a10);
-  box-shadow: 0 0 60px rgba(232,184,101,0.4);
-  animation: spline-pulse 3.4s ease-in-out infinite;
-}
-.spline-ph-ring {
-  position: absolute; inset: 8%;
-  border-radius: 50%;
-  border: 1px dashed rgba(232,184,101,0.35);
-  animation: spline-spin 18s linear infinite;
-}
+.spline-ph-core { position: absolute; inset: 34%; border-radius: 50%; background: radial-gradient(circle at 35% 30%, var(--gold-hi), var(--ember) 60%, #6a3a10); box-shadow: 0 0 60px rgba(232,184,101,0.4); animation: spline-pulse 3.4s ease-in-out infinite; }
+.spline-ph-ring { position: absolute; inset: 8%; border-radius: 50%; border: 1px dashed rgba(232,184,101,0.35); animation: spline-spin 18s linear infinite; }
 @keyframes spline-float { 0%,100% { transform: translateY(-10px); } 50% { transform: translateY(10px); } }
 @keyframes spline-pulse { 0%,100% { transform: scale(0.94); opacity:0.85; } 50% { transform: scale(1.06); opacity:1; } }
 @keyframes spline-spin  { to { transform: rotate(360deg); } }
-.spline-ph-label {
-  position: absolute; bottom: 26px; left: 0; right: 0;
-  text-align: center;
-  font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: 0.24em;
-  text-transform: uppercase; color: var(--stone);
-}
+.spline-ph-label { position: absolute; bottom: 22px; left: 0; right: 0; text-align: center; font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--stone); }
 
-.spline-stage-caption {
-  position: absolute; left: 22px; bottom: 20px; z-index: 3;
-  pointer-events: none;
-}
-.spline-stage-caption .ssc-title {
-  font-family: 'Cinzel', serif; font-size: 22px; color: var(--paper);
-  text-shadow: 0 2px 20px rgba(0,0,0,0.8);
-}
-.spline-stage-caption .ssc-sub {
-  font-family: 'Inter', sans-serif; font-size: 13px; color: var(--paper-muted); font-weight: 300;
-}
-.spline-live-tag {
-  position: absolute; top: 18px; right: 18px; z-index: 3;
-  display: inline-flex; align-items: center; gap: 7px;
-  font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.2em;
-  text-transform: uppercase; color: var(--gold);
-  background: rgba(8,13,10,0.6); backdrop-filter: blur(6px);
-  border: 1px solid rgba(232,184,101,0.24); border-radius: 999px; padding: 6px 12px;
-}
+.spline-card-cap { position: absolute; left: 16px; bottom: 14px; z-index: 3; font-family: 'Cinzel', serif; font-size: 15px; letter-spacing: 1px; color: var(--paper); text-shadow: 0 2px 14px rgba(0,0,0,0.85); pointer-events: none; }
+.spline-live-tag { position: absolute; top: 14px; right: 14px; z-index: 3; display: inline-flex; align-items: center; gap: 7px; font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); background: rgba(8,13,10,0.6); backdrop-filter: blur(6px); border: 1px solid rgba(232,184,101,0.24); border-radius: 999px; padding: 5px 11px; }
 .spline-live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 8px var(--gold); animation: spline-pulse 2s infinite; }
-
-/* Thumb rail */
-.spline-rail { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
-.spline-thumb {
-  position: relative;
-  border-radius: 6px; overflow: hidden; cursor: pointer;
-  aspect-ratio: 16/10;
-  border: 1px solid rgba(232,184,101,0.12);
-  background: linear-gradient(150deg, #16211c, #0a110d);
-  transition: border-color .35s, transform .35s;
-}
-.spline-thumb:hover { transform: translateY(-3px); border-color: rgba(232,184,101,0.4); }
-.spline-thumb.active { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold), 0 18px 40px -22px rgba(232,184,101,0.5); }
-.spline-thumb-ph { position: absolute; inset: 0; display: grid; place-items: center; }
-.spline-thumb-ph svg { width: 40%; opacity: 0.5; }
-.spline-thumb-label {
-  position: absolute; left: 12px; bottom: 10px;
-  font-family: 'Inter', sans-serif; font-size: 12px; color: var(--paper);
-  letter-spacing: 0.04em; text-shadow: 0 1px 8px rgba(0,0,0,0.8);
-}
-.spline-rail-note {
-  font-family: 'Inter', sans-serif; font-size: 12px; color: var(--stone);
-  line-height: 1.5; padding: 4px 2px;
-}
+@media (max-width: 760px) { .spline-gallery { grid-template-columns: 1fr; } .spline-card--featured { aspect-ratio: 4 / 3; } }
 
 /* ============================================================
    3 · DESIGN  — gallery grid with hover reveal + lightbox
@@ -511,7 +441,6 @@
 
 /* ---- responsive ---- */
 @media (max-width: 900px) {
-  .spline-rail { grid-template-columns: repeat(3, 1fr); }
   .design-item.col-6, .design-item.col-4, .design-item.col-8 { grid-column: span 12; }
   .design-item.row-2 { grid-row: span 1; }
 }
