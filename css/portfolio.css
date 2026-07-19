@@ -74,10 +74,9 @@
    Featured 3D stage + thumbnail rail
 ============================================================ */
 .spline-stage-grid {
-  display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 28px;
-  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 .spline-stage {
   position: relative;
@@ -156,7 +155,7 @@
 .spline-live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 8px var(--gold); animation: spline-pulse 2s infinite; }
 
 /* Thumb rail */
-.spline-rail { display: flex; flex-direction: column; gap: 14px; }
+.spline-rail { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
 .spline-thumb {
   position: relative;
   border-radius: 6px; overflow: hidden; cursor: pointer;
@@ -512,9 +511,7 @@
 
 /* ---- responsive ---- */
 @media (max-width: 900px) {
-  .spline-stage-grid { grid-template-columns: 1fr; }
-  .spline-rail { flex-direction: row; overflow-x: auto; }
-  .spline-thumb { min-width: 180px; }
+  .spline-rail { grid-template-columns: repeat(3, 1fr); }
   .design-item.col-6, .design-item.col-4, .design-item.col-8 { grid-column: span 12; }
   .design-item.row-2 { grid-row: span 1; }
 }

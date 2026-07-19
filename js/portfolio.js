@@ -18,7 +18,7 @@
       const s = document.createElement('script');
       s.type = 'module';
       s.dataset.splineViewer = '1';
-      s.src = 'https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js';
+      s.src = 'https://unpkg.com/@splinetool/viewer@1.12.98/build/spline-viewer.js';
       document.head.appendChild(s);
     };
 
@@ -47,9 +47,18 @@
       });
     });
 
-    // Auto-load first thumb that already has a real URL
+    // Load the first real scene only once the stage scrolls near view (scenes are heavy)
     const firstReal = [...splineThumbs].find(t => t.dataset.url);
-    if (firstReal) firstReal.click();
+    if (firstReal) {
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries, obs) => {
+          if (entries[0].isIntersecting) { firstReal.click(); obs.disconnect(); }
+        }, { rootMargin: '300px 0px' });
+        io.observe(splineStage);
+      } else {
+        firstReal.click();
+      }
+    }
   }
 
   /* ---- TikTok lightbox — official embed, loaded on click ---- */
