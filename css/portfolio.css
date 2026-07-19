@@ -308,8 +308,10 @@
 /* ---- Websites gallery — 2x2 grid; hover slides an info panel out BESIDE the card ---- */
 .web-gallery-wrap { max-width: 1240px; margin: 0 auto; padding: 0 clamp(20px,5vw,52px) clamp(8px,2vw,20px); }
 .web-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(22px,2.8vw,36px); }
-.web-card { position: relative; }
-.web-card:hover { z-index: 10; }
+.web-card { position: relative; transform-origin: center center; will-change: transform; transition: transform .55s var(--ease, cubic-bezier(.22,1,.36,1)), opacity .4s ease, filter .4s ease; }
+.web-card:hover { z-index: 10; transform: scale(1.18); }
+/* strong scale contrast — the other three shrink and recede while one is focused */
+.web-gallery:has(.web-card:hover) .web-card:not(:hover) { transform: scale(0.8); opacity: 0.45; filter: saturate(0.7); }
 .web-frame {
   position: relative;
   display: flex; flex-direction: column;
@@ -319,7 +321,7 @@
   background: var(--bg-tinted, #0c1410);
   transition: border-color .5s, box-shadow .5s, transform .5s var(--ease, cubic-bezier(.22,1,.36,1));
 }
-.web-card:hover .web-frame { border-color: rgba(232,184,101,0.42); box-shadow: 0 30px 64px -40px rgba(0,0,0,0.92); transform: translateY(-4px); }
+.web-card:hover .web-frame { border-color: rgba(232,184,101,0.5); box-shadow: 0 44px 90px -38px rgba(0,0,0,0.95); }
 .web-chrome { flex: 0 0 auto; display: flex; align-items: center; gap: 11px; padding: 11px 14px; background: rgba(10,15,12,0.92); border-bottom: 1px solid rgba(232,184,101,0.08); }
 .web-url { display: inline-flex; align-items: center; gap: 7px; font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.02em; color: var(--paper-muted); opacity: 0.75; white-space: nowrap; overflow: hidden; }
 .web-shot { position: relative; flex: 1 1 auto; overflow: hidden; background: #fff; }
