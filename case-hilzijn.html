@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hilzijn Rebranding Campagne — Case Study · Digital Shiru</title>
+<meta name="description" content="Case study: a rebranding and crossmedia campaign for Zorggroep Hilzijn, built around illustrated client portraits — 'Het verhaal achter het gezicht'." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#080d0a; --bg-2:#0c1410; --paper:#f0e8d4; --paper-muted:#d4c8a8;
+    --gold:#e8b865; --gold-hi:#f5d088; --ember:#d4763a; --stone:#5a5448;
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--paper);
+    font-family:'Inter',sans-serif; font-weight:300; font-size:16px; line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%; display:block}
+  a{color:inherit}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 clamp(20px,5vw,52px)}
+
+  /* ---- top bar ---- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+    padding:16px clamp(20px,5vw,52px);
+    background:rgba(8,13,10,.82); backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(232,184,101,.12);
+  }
+  .back{
+    display:inline-flex; align-items:center; gap:9px; text-decoration:none;
+    font-size:13px; letter-spacing:.06em; color:var(--paper-muted);
+    transition:color .3s;
+  }
+  .back:hover{color:var(--gold)}
+  .back svg{width:14px;height:14px}
+  .topbar-brand{font-family:'Cinzel',serif; font-size:15px; letter-spacing:.12em; color:var(--gold)}
+
+  /* ---- hero ---- */
+  .hero{padding:clamp(56px,8vw,110px) 0 clamp(40px,5vw,64px)}
+  .eyebrow{
+    font-family:'Inter',sans-serif; font-size:11px; font-weight:600;
+    letter-spacing:.3em; text-transform:uppercase; color:var(--ember); margin:0 0 22px;
+  }
+  h1{
+    font-family:'Cinzel',serif; font-weight:500;
+    font-size:clamp(32px,5.4vw,64px); line-height:1.05; letter-spacing:-.01em;
+    margin:0 0 26px;
+  }
+  h1 .accent{color:var(--gold); font-style:italic; font-weight:400}
+  .lede{font-size:clamp(16px,1.7vw,19px); color:var(--paper-muted); max-width:62ch; margin:0 0 38px}
+  .meta{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:24px 32px; padding:28px 0; margin-bottom:34px;
+    border-top:1px solid rgba(232,184,101,.14); border-bottom:1px solid rgba(232,184,101,.14);
+  }
+  .meta-k{
+    display:block; font-family:'Cinzel',serif; font-size:9px; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--gold); opacity:.7; margin-bottom:8px;
+  }
+  .meta-v{font-size:14.5px; color:var(--paper)}
+  .ctas{display:flex; gap:14px; flex-wrap:wrap}
+  .btn{
+    display:inline-flex; align-items:center; gap:9px; text-decoration:none;
+    font-family:'Cinzel',serif; font-size:11px; font-weight:700; letter-spacing:.2em;
+    text-transform:uppercase; padding:14px 26px; border-radius:3px;
+    transition:background .3s, color .3s, border-color .3s, transform .3s var(--ease);
+  }
+  .btn svg{width:12px;height:12px}
+  .btn-gold{background:var(--gold); color:#0d0a05; border:1px solid var(--gold)}
+  .btn-gold:hover{background:var(--gold-hi); transform:translateY(-2px)}
+  .btn-ghost{border:1px solid rgba(232,184,101,.4); color:var(--paper)}
+  .btn-ghost:hover{border-color:var(--gold); color:var(--gold); transform:translateY(-2px)}
+
+  /* ---- sections ---- */
+  section{padding:clamp(52px,7vw,96px) 0}
+  .sec-head{max-width:70ch; margin-bottom:clamp(30px,4vw,48px)}
+  .sec-num{
+    font-family:'Cinzel',serif; font-size:11px; letter-spacing:.26em;
+    color:var(--ember); display:block; margin-bottom:14px;
+  }
+  h2{
+    font-family:'Cinzel',serif; font-weight:500; font-size:clamp(24px,3.4vw,38px);
+    line-height:1.12; margin:0 0 16px;
+  }
+  h2 .accent{color:var(--gold); font-style:italic; font-weight:400}
+  .sec-head p{color:var(--paper-muted); margin:0; max-width:60ch}
+  .pull{
+    font-family:'Cinzel',serif; font-size:clamp(18px,2.4vw,27px); line-height:1.35;
+    color:var(--gold); font-style:italic; margin:clamp(34px,4vw,52px) 0;
+    padding-left:clamp(18px,2.4vw,28px); border-left:2px solid rgba(232,184,101,.4);
+    max-width:26ch;
+  }
+
+  /* ---- slide grids ---- */
+  .grid{display:grid; gap:clamp(14px,1.8vw,22px)}
+  .g-1{grid-template-columns:1fr}
+  .g-2{grid-template-columns:repeat(2,1fr)}
+  .g-3{grid-template-columns:repeat(3,1fr)}
+  .slide{
+    position:relative; border-radius:8px; overflow:hidden; cursor:zoom-in;
+    border:1px solid rgba(232,184,101,.14); background:var(--bg-2);
+    transition:transform .5s var(--ease), border-color .4s, box-shadow .4s;
+  }
+  .slide:hover{transform:translateY(-4px); border-color:rgba(232,184,101,.42); box-shadow:0 26px 56px -34px rgba(0,0,0,.9)}
+  .slide img{width:100%; height:100%; object-fit:cover; aspect-ratio:16/9}
+  .cap{
+    font-size:12.5px; color:var(--stone); margin-top:10px; letter-spacing:.02em;
+  }
+  figure{margin:0}
+
+  /* ---- deck strip ---- */
+  .deck{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px}
+  .deck .slide img{aspect-ratio:16/9}
+
+  /* ---- lightbox ---- */
+  #lb{
+    position:fixed; inset:0; z-index:9999; display:none; place-items:center;
+    background:rgba(5,8,6,.95); backdrop-filter:blur(8px); padding:4vh 4vw;
+  }
+  #lb.open{display:grid}
+  #lb img{max-width:100%; max-height:88vh; border-radius:6px; box-shadow:0 40px 120px -30px #000; border:1px solid rgba(232,184,101,.22)}
+  .lb-close,.lb-nav{
+    position:fixed; background:rgba(12,20,16,.8); border:1px solid rgba(232,184,101,.28);
+    color:var(--paper); cursor:pointer; border-radius:50%;
+    width:46px; height:46px; display:grid; place-items:center; font-size:18px;
+    transition:background .3s,color .3s;
+  }
+  .lb-close:hover,.lb-nav:hover{background:var(--gold); color:#0d0a05}
+  .lb-close{top:20px; right:20px}
+  .lb-prev{left:20px; top:50%; transform:translateY(-50%)}
+  .lb-next{right:20px; top:50%; transform:translateY(-50%)}
+  .lb-count{
+    position:fixed; bottom:22px; left:50%; transform:translateX(-50%);
+    font-family:'Cinzel',serif; font-size:12px; letter-spacing:.18em; color:var(--paper-muted);
+  }
+
+  /* ---- footer ---- */
+  footer{
+    border-top:1px solid rgba(232,184,101,.12);
+    padding:44px 0; margin-top:clamp(40px,6vw,80px);
+  }
+  .foot-in{display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap}
+  .foot-in span{font-size:13px; color:var(--stone)}
+
+  @media(max-width:820px){
+    .g-3{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:560px){
+    .g-2,.g-3{grid-template-columns:1fr}
+    .lb-prev{left:10px} .lb-next{right:10px}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="back" href="index.html#design">
+    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 2L4 7l5 5"/></svg>
+    Back to portfolio
+  </a>
+  <span class="topbar-brand">Digital Shiru</span>
+</header>
+
+<main>
+  <!-- ============ HERO ============ -->
+  <div class="wrap hero">
+    <p class="eyebrow">Case Study · Branding &amp; Campaign</p>
+    <h1>Hilzijn <span class="accent">Rebranding</span><br />Campagne</h1>
+    <p class="lede">
+      A care group is judged on trust long before anyone reads a word. For Zorggroep Hilzijn
+      I rebuilt that first impression around the people they actually help — turning real client
+      journeys into illustrated portraits, and rolling them out from Instagram to bus stops.
+    </p>
+
+    <div class="meta">
+      <div><span class="meta-k">Client</span><span class="meta-v">Zorggroep Hilzijn</span></div>
+      <div><span class="meta-k">Type</span><span class="meta-v">Rebranding · Crossmedia campaign</span></div>
+      <div><span class="meta-k">Role</span><span class="meta-v">Concept · Illustration · Art direction · Design</span></div>
+      <div><span class="meta-k">Reach</span><span class="meta-v">Social · Out-of-home · Print · Merch</span></div>
+    </div>
+
+    <div class="ctas">
+      <a class="btn btn-gold" href="https://www.hilzijn.nl/" target="_blank" rel="noopener">
+        Visit hilzijn.nl
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 9L9 3M4.2 3H9v4.8"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="assets/docs/hilzijn-branding.pdf" target="_blank" rel="noopener">
+        Full deck (PDF)
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 1v8M3 6.2L6 9.2l3-3M2 11h8"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- ============ 01 CONCEPT ============ -->
+  <section class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">01 — The concept</span>
+      <h2>The story <span class="accent">behind the face</span></h2>
+      <p>
+        Care marketing usually hides behind stock photography and soft language. We went the
+        other way: every campaign asset starts with one real person and one real journey.
+        Illustrated portraits keep the story recognisable while protecting the client's privacy —
+        honest, but never exposed.
+      </p>
+    </div>
+    <div class="grid g-1" id="g-concept"></div>
+    <p class="pull">“Verhalen samenbrengen is onze kunst.”</p>
+  </section>
+
+  <!-- ============ 02 PORTRAITS ============ -->
+  <section class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">02 — The portraits</span>
+      <h2>Six journeys, <span class="accent">six faces</span></h2>
+      <p>
+        Each story got its own illustrated portrait and written account — from Yassin, who
+        travelled to a new country alone, to Bertus, who rebuilt his independence at 68. The
+        palette shifts per person, but the frame, type and tone stay identical, so the set
+        reads as one family.
+      </p>
+    </div>
+    <div class="grid g-2" id="g-portraits"></div>
+  </section>
+
+  <!-- ============ 03 DIGITAL ============ -->
+  <section class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">03 — Digital</span>
+      <h2>Built for <span class="accent">the feed</span></h2>
+      <p>
+        The portraits were designed to survive a thumb at speed: a strong face, a single
+        colour field, and the campaign line locked to the same position every time. The grid
+        becomes a gallery of people rather than a wall of posts.
+      </p>
+    </div>
+    <div class="grid g-2" id="g-digital"></div>
+  </section>
+
+  <!-- ============ 04 OUT OF HOME ============ -->
+  <section class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">04 — Out of home</span>
+      <h2>From screen <span class="accent">to street</span></h2>
+      <p>
+        A campaign about being seen shouldn't stay online. The same portrait system scales
+        from a bus-stop poster to a full bus wrap, a building banner and the company vans —
+        one visual language, wherever it lands.
+      </p>
+    </div>
+    <div class="grid g-2" id="g-ooh"></div>
+  </section>
+
+  <!-- ============ 05 PRINT & MERCH ============ -->
+  <section class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">05 — Print &amp; merchandise</span>
+      <h2>Something to <span class="accent">carry with you</span></h2>
+      <p>
+        Business cards, art prints, tees and mugs turn the campaign into something staff and
+        residents can hold — and quietly extend the brand well past the campaign period.
+      </p>
+    </div>
+    <div class="grid g-3" id="g-merch"></div>
+  </section>
+
+  <!-- ============ FULL DECK ============ -->
+  <section class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">06 — The full deck</span>
+      <h2>Every <span class="accent">slide</span></h2>
+      <p>Tap any slide to view it full size.</p>
+    </div>
+    <div class="deck" id="g-all"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <a class="back" href="index.html#design">
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 2L4 7l5 5"/></svg>
+      Back to portfolio
+    </a>
+    <span>Zorggroep Hilzijn · Designed &amp; built by Sil</span>
+  </div>
+</footer>
+
+<div id="lb" role="dialog" aria-modal="true" aria-label="Slide viewer">
+  <img id="lb-img" alt="" />
+  <button class="lb-close" id="lb-close" aria-label="Close">✕</button>
+  <button class="lb-nav lb-prev" id="lb-prev" aria-label="Previous">‹</button>
+  <button class="lb-nav lb-next" id="lb-next" aria-label="Next">›</button>
+  <span class="lb-count" id="lb-count"></span>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var DIR = 'assets/images/design/hilzijn/slides/';
+  var pad = function (n) { return String(n).padStart(2, '0'); };
+  var src = function (n) { return DIR + pad(n) + '.jpg'; };
+
+  // slide groups (page numbers in the deck)
+  var groups = {
+    'g-concept':  [{ n: 3,  c: 'Campaign concept + Instagram profile mock-up' }],
+    'g-portraits':[
+      { n: 4, c: 'Het verhaal van: Yassin' },
+      { n: 5, c: 'Het verhaal van: Mitchel' },
+      { n: 6, c: 'Het verhaal van: Jessica' },
+      { n: 7, c: 'Het verhaal van: Manuela & Ivan' },
+      { n: 8, c: 'Het verhaal van: Bertus' },
+      { n: 9, c: 'Het verhaal van: Eva' }
+    ],
+    'g-digital':  [
+      { n: 10, c: 'Social feed mock-up' },
+      { n: 24, c: 'Community & campaign hashtags' },
+      { n: 21, c: 'Merchandise webshop' },
+      { n: 11, c: 'Crossmedia strategy' }
+    ],
+    'g-ooh':      [
+      { n: 12, c: 'Bus-stop poster' },
+      { n: 13, c: 'Poster series in situ' },
+      { n: 22, c: 'Bus wrap advertisement' },
+      { n: 23, c: 'Building banner' },
+      { n: 14, c: 'Company van livery' },
+      { n: 16, c: 'Art prints' }
+    ],
+    'g-merch':    [
+      { n: 15, c: 'Business cards' },
+      { n: 17, c: 'Merchandise — tees' },
+      { n: 18, c: 'Merchandise — apparel' },
+      { n: 19, c: 'Merchandise — front & back' },
+      { n: 20, c: 'Merchandise — mug' },
+      { n: 1,  c: 'Brand mark & tagline' }
+    ]
+  };
+
+  var order = []; // lightbox order, built as we render
+
+  function tile(n, caption) {
+    var fig = document.createElement('figure');
+    var a = document.createElement('div');
+    a.className = 'slide';
+    a.dataset.n = n;
+    var img = document.createElement('img');
+    img.src = src(n);
+    img.alt = caption || ('Hilzijn campaign slide ' + n);
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    a.appendChild(img);
+    fig.appendChild(a);
+    if (caption) {
+      var cap = document.createElement('figcaption');
+      cap.className = 'cap';
+      cap.textContent = caption;
+      fig.appendChild(cap);
+    }
+    return fig;
+  }
+
+  Object.keys(groups).forEach(function (id) {
+    var host = document.getElementById(id);
+    if (!host) return;
+    groups[id].forEach(function (item) { host.appendChild(tile(item.n, item.c)); });
+  });
+
+  // full deck
+  var all = document.getElementById('g-all');
+  for (var i = 1; i <= 25; i++) all.appendChild(tile(i, ''));
+
+  // ---- lightbox ----
+  var lb = document.getElementById('lb');
+  var lbImg = document.getElementById('lb-img');
+  var lbCount = document.getElementById('lb-count');
+  var cur = 1;
+
+  function show(n) {
+    cur = ((n - 1 + 25) % 25) + 1;
+    lbImg.src = src(cur);
+    lbCount.textContent = pad(cur) + ' / 25';
+  }
+  function open(n) { show(n); lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function close() { lb.classList.remove('open'); lbImg.src = ''; document.body.style.overflow = ''; }
+
+  document.addEventListener('click', function (e) {
+    var s = e.target.closest ? e.target.closest('.slide') : null;
+    if (s && s.dataset.n) { open(Number(s.dataset.n)); }
+  });
+  document.getElementById('lb-close').addEventListener('click', close);
+  document.getElementById('lb-prev').addEventListener('click', function (e) { e.stopPropagation(); show(cur - 1); });
+  document.getElementById('lb-next').addEventListener('click', function (e) { e.stopPropagation(); show(cur + 1); });
+  lb.addEventListener('click', function (e) { if (e.target === lb || e.target === lbImg) close(); });
+  document.addEventListener('keydown', function (e) {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') show(cur - 1);
+    if (e.key === 'ArrowRight') show(cur + 1);
+  });
+})();
+</script>
+</body>
+</html>
