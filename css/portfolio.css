@@ -305,6 +305,72 @@
   .lp-wrap--flip .lp-info, .lp-wrap--flip .lp-browser { order: 0; }
 }
 
+/* ---- Websites gallery (side-by-side browser previews) ---- */
+.web-gallery-wrap { max-width: 1240px; margin: 0 auto; padding: 0 clamp(20px,5vw,52px) clamp(8px,2vw,20px); }
+.web-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(20px,2.6vw,34px); }
+.web-card {
+  border: 1px solid rgba(232,184,101,0.14);
+  border-radius: 10px; overflow: hidden;
+  background: var(--bg-tinted, #0c1410);
+  transition: transform .5s var(--ease, cubic-bezier(.22,1,.36,1)), border-color .5s, box-shadow .5s;
+}
+.web-card:hover { transform: translateY(-6px); border-color: rgba(232,184,101,0.42); box-shadow: 0 34px 70px -40px rgba(0,0,0,0.92); }
+.web-cardlink { display: block; text-decoration: none; }
+.web-chrome {
+  display: flex; align-items: center; gap: 11px;
+  padding: 11px 14px;
+  background: rgba(255,255,255,0.02);
+  border-bottom: 1px solid rgba(232,184,101,0.08);
+}
+.web-url {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.02em;
+  color: var(--paper-muted); opacity: 0.75;
+}
+.web-shot { position: relative; height: 300px; overflow: hidden; background: #fff; }
+.web-shot iframe {
+  width: 200%; height: 200%;
+  transform: scale(0.5); transform-origin: top left;
+  border: 0; display: block; pointer-events: none;
+}
+.web-card:hover .web-shot iframe { pointer-events: auto; }
+.web-shot-img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+.web-hover {
+  position: absolute; inset: 0; z-index: 2;
+  display: grid; place-items: center;
+  background: rgba(8,13,10,0.4); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+  transition: opacity .4s ease;
+}
+.web-card:hover .web-hover { opacity: 0; pointer-events: none; }
+.web-hover-hint {
+  font-family: 'Cinzel', serif; font-size: 9px; font-weight: 700;
+  letter-spacing: 4px; text-transform: uppercase; color: var(--gold);
+  border: 1px solid rgba(232,184,101,0.4); padding: 9px 20px;
+}
+.web-live {
+  position: absolute; top: 12px; right: 12px; z-index: 3;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--paper);
+  background: rgba(8,13,10,0.5); backdrop-filter: blur(6px);
+  padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(240,232,212,0.14);
+}
+.web-live-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ac36a; box-shadow: 0 0 8px #4ac36a; animation: spline-pulse 2s infinite; }
+.web-foot { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 15px 16px 17px; }
+.web-name { font-family: 'Cinzel', serif; font-size: 16px; color: var(--paper); display: block; letter-spacing: 0.02em; }
+.web-type { font-family: 'Inter', sans-serif; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--stone); display: block; margin-top: 4px; }
+.web-visit {
+  flex-shrink: 0; display: inline-flex; align-items: center; gap: 7px;
+  font-family: 'Cinzel', serif; font-size: 8.5px; font-weight: 700;
+  letter-spacing: 2.5px; text-transform: uppercase; color: var(--paper);
+  text-decoration: none; padding: 9px 15px; border-radius: 3px;
+  border: 1px solid rgba(232,184,101,0.35);
+  transition: background .3s, border-color .3s, color .3s;
+}
+.web-visit:hover { background: var(--gold); color: #0d0a05; border-color: var(--gold); }
+.web-visit svg { width: 11px; height: 11px; }
+@media (max-width: 820px) { .web-gallery { grid-template-columns: 1fr; } }
+
 /* ---- TikTok showcase (real content) ---- */
 .tt-grid {
   display: grid;
