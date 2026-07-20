@@ -698,3 +698,19 @@ footer .fc-coords span { color: var(--paper-muted); opacity: 0.95; }
 /* About: with the longer bio the text column is far taller than the photo
    stack, so centring left the scrapbook floating in dead space. */
 .parchment-content { align-items: start; }
+
+/* ---- Adventure prop: gold coin that rolls across on scroll ---- */
+.rolling-coin {
+  position: fixed;
+  left: 0; top: 0;
+  width: 118px;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 16px 20px rgba(0,0,0,0.55));
+  transform: translate3d(-240px, 0, 0);
+}
+.rolling-coin img { width: 100%; height: auto; display: block; }
+@media (max-width: 760px) { .rolling-coin { display: none; } }
+@media (prefers-reduced-motion: reduce) { .rolling-coin { display: none; } }

@@ -7494,6 +7494,42 @@
   <div class="lb-counter" id="lb-counter"></div>
 </div>
 
+<!-- Adventure prop: gold coin that rolls across while scrolling the design/illustration run -->
+<div class="rolling-coin" aria-hidden="true"><img src="assets/images/props/coin.png" alt=""></div>
+<script>
+(function () {
+  var coin = document.querySelector('.rolling-coin');
+  if (!coin) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var startEl = document.getElementById('design');
+  var endEl   = document.getElementById('illustrations');
+  if (!startEl || !endEl) return;
+
+  var COIN_W = 118, R = COIN_W / 2, DEG = 180 / Math.PI;
+  var ticking = false;
+
+  function update() {
+    ticking = false;
+    if (window.innerWidth <= 760) { coin.style.opacity = 0; return; }
+    var vh = window.innerHeight, vw = window.innerWidth;
+    var a = startEl.getBoundingClientRect().top;          // start ref, viewport px
+    var span = endEl.getBoundingClientRect().bottom - a;  // constant combined height
+    var p = (vh - a) / (vh + span);                       // 0 entering .. 1 leaving
+    if (p <= 0 || p >= 1) { coin.style.opacity = 0; return; }
+    var xStart = -COIN_W - 60, xEnd = vw + 60;
+    var x = xStart + (xEnd - xStart) * p;
+    var y = vh * 0.72;                                     // fixed "floor line"
+    var deg = ((x - xStart) / R) * DEG;                   // rotation follows distance rolled
+    var op = 0.6 * Math.min(1, Math.min(p, 1 - p) / 0.08);
+    coin.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) rotate(' + deg.toFixed(1) + 'deg)';
+    coin.style.opacity = op.toFixed(3);
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, { passive: true, capture: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  update();
+})();
+</script>
 <script src="js/portfolio.js"></script>
 </body>
 </html>
