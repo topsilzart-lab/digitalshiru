@@ -520,18 +520,3 @@
 .brands-logo:hover { opacity: 1; }
 @keyframes brands-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .brands-track { animation: none; } }
-
-/* ---- second marquee row: "My stack" (text chips, opposite direction) ---- */
-.brands-head--2 { margin-top: clamp(32px,4vw,52px); }
-.brands-track--rev { animation-name: brands-scroll-rev; animation-duration: 54s; }
-@keyframes brands-scroll-rev { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-.stack-track { gap: clamp(12px,1.4vw,18px); }
-.stack-chip {
-  flex: none; white-space: nowrap;
-  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 300; letter-spacing: 0.02em;
-  color: var(--paper-muted);
-  border: 1px solid rgba(232,184,101,0.18); border-radius: 999px;
-  padding: 9px 18px; background: rgba(232,184,101,0.04);
-  transition: border-color .3s ease, color .3s ease, background .3s ease;
-}
-.stack-chip:hover { border-color: rgba(232,184,101,0.5); color: var(--paper); background: rgba(232,184,101,0.08); }
