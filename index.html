@@ -5014,11 +5014,18 @@
 
       /* Parchment hugs its content — no forced dead space */
       .parchment-map     { min-height: auto; }
-      .parchment-content { grid-template-columns: 1fr; align-items: start; gap: 40px; min-height: auto; }
+      .parchment-content { display: block; grid-template-columns: 1fr; min-height: auto; }
+
+      /* Intel band stacks as a readable list on phones */
+      .dossier-intel      { grid-template-columns: 1fr; column-gap: 0; margin-bottom: 24px; }
+
+      /* Photo exhibit is a centered plate within the single column */
+      .parchment-photo      { max-width: 300px; margin: 6px auto 26px; }
+      .parchment-photo-foot { margin-top: 18px; text-align: center; }
 
       /* Scrapbook photos stay inside the parchment */
       .scrapbook-stack        { max-width: 258px; margin: 8px auto 0; padding-bottom: 112%; }
-      .parchment-photo-caption { text-align: center; margin-top: 26px; }
+      .parchment-photo-caption { text-align: center; margin-top: 0; }
       .parchment-page-ref     { text-align: center; display: block; }
       .about-exhibit-label    { text-align: center; }
     }
@@ -5032,6 +5039,46 @@
       .waypoint-numeral  { font-size: 16px; }
       .dossier-intel-row { grid-template-columns: 66px 10px 1fr; }
       .scrapbook-stack   { max-width: 228px; padding-bottom: 118%; }
+    }
+
+    /* ============================================================
+       ABOUT — single centered dossier column (tablet & desktop)
+       One column on the parchment so it fills top-to-bottom with no
+       empty side void; the map breathes at the margins.
+    ============================================================ */
+    @media (min-width: 761px) {
+      .parchment-content {
+        display: block;
+        max-width: 820px;
+        margin: 0 auto;
+        min-height: 0;
+      }
+      /* Intel becomes a full-width stat band across the top */
+      .parchment-content > .dossier-intel {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 46px;
+        row-gap: 0;
+        margin: 0 0 30px;
+        padding: 0 0 6px;
+        border-top: none;
+        border-bottom: 1px solid rgba(122,78,32,0.18);
+      }
+      /* Photo exhibit — a centered plate directly under the name */
+      .parchment-photo {
+        max-width: 440px;
+        margin: 30px auto 38px;
+      }
+      .parchment-photo-top { display: block; }
+      .about-exhibit-label { text-align: center; }
+      .parchment-photo-foot {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 14px;
+        margin-top: 20px;
+      }
+      .parchment-photo-foot .parchment-photo-caption { margin-top: 0; }
     }
 
   </style>
@@ -5574,11 +5621,8 @@
       <!-- Content on top of parchment -->
       <div class="parchment-content">
 
-        <!-- Left: text -->
-        <div>
-
-          <!-- Dossier intelligence grid -->
-          <div class="dossier-intel">
+        <!-- Dossier stat band (full width) -->
+        <div class="dossier-intel">
             <div class="dossier-intel-row">
               <span class="dossier-intel-key">File Ref</span>
               <span class="dossier-intel-rule"></span>
@@ -5611,12 +5655,51 @@
             </div>
           </div>
 
+        <!-- Left: the story -->
+        <div class="parchment-text">
+
+
           <div class="about-eyebrow">Founder Record · Digital Shiru</div>
 
           <h3 class="about-h3">
             Ik ben Sil.
             <span class="about-h3-sub">Ontwerper, illustrator<br>&amp; digitale bouwer.</span>
           </h3>
+
+          <!-- Exhibit plate -->
+          <div class="parchment-photo">
+            <div class="parchment-photo-top">
+              <div class="about-exhibit-label">Visual Evidence · Field Archive</div>
+              <div class="scrapbook-stack" id="scrapStack">
+              <!-- Photo slot 3 (back) -->
+              <div class="scrap-photo scrap-p3">
+              <div class="tape tape-tl"></div>
+              <div class="tape tape-br"></div>
+              <img src="assets/images/about/989eda6a-4ff7-4602-a875-cbba43c06ff1.png" alt="Expedition Log">
+              <div class="scrap-note">Expedition Log #03</div>
+              </div>
+              <!-- Photo slot 2 (mid) -->
+              <div class="scrap-photo scrap-p2">
+              <div class="tape tape-tr"></div>
+              <div class="tape tape-bl"></div>
+              <img src="assets/images/about/ChatGPT Image 29 apr 2026, 10_15_54.png" alt="Field Notes">
+              <div class="scrap-note">Field Notes #02</div>
+              </div>
+              <!-- Photo slot 1 (front) -->
+              <div class="scrap-photo scrap-p1">
+              <div class="tape tape-tl"></div>
+              <div class="tape tape-tr"></div>
+              <img src="assets/images/about/Product_Shot_Video_Builder_Images__Color_palette__Warm__earthy_tones_inspired_by_dese.png" alt="About Digital Shiru">
+              <div class="scrap-note">52°22′N · 4°54′E</div>
+              </div>
+              </div>
+              
+            </div>
+            <div class="parchment-photo-foot">
+              <div class="parchment-photo-caption">Visual Record · Exhibits A–C</div>
+              <span class="parchment-page-ref">Click to cycle · Archive access</span>
+            </div>
+          </div>
 
           <div class="about-brief">
             <p class="about-body">
@@ -5658,35 +5741,6 @@
 
         </div>
 
-        <!-- Right: scrapbook stack -->
-        <div class="parchment-photo">
-          <div class="about-exhibit-label">Visual Evidence · Field Archive</div>
-          <div class="scrapbook-stack" id="scrapStack">
-            <!-- Photo slot 3 (back) -->
-            <div class="scrap-photo scrap-p3">
-              <div class="tape tape-tl"></div>
-              <div class="tape tape-br"></div>
-              <img src="assets/images/about/989eda6a-4ff7-4602-a875-cbba43c06ff1.png" alt="Expedition Log">
-              <div class="scrap-note">Expedition Log #03</div>
-            </div>
-            <!-- Photo slot 2 (mid) -->
-            <div class="scrap-photo scrap-p2">
-              <div class="tape tape-tr"></div>
-              <div class="tape tape-bl"></div>
-              <img src="assets/images/about/ChatGPT Image 29 apr 2026, 10_15_54.png" alt="Field Notes">
-              <div class="scrap-note">Field Notes #02</div>
-            </div>
-            <!-- Photo slot 1 (front) -->
-            <div class="scrap-photo scrap-p1">
-              <div class="tape tape-tl"></div>
-              <div class="tape tape-tr"></div>
-              <img src="assets/images/about/Product_Shot_Video_Builder_Images__Color_palette__Warm__earthy_tones_inspired_by_dese.png" alt="About Digital Shiru">
-              <div class="scrap-note">52°22′N · 4°54′E</div>
-            </div>
-          </div>
-          <div class="parchment-photo-caption">Visual Record · Exhibits A–C</div>
-          <span class="parchment-page-ref">Click to cycle · Archive access</span>
-        </div>
 
       </div>
     </div>
