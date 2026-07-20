@@ -4931,6 +4931,109 @@
     .split-heading.reveal          { transform: none; }
     .split-heading.reveal.visible  { transform: none; }
 
+    /* ============================================================
+       MOBILE NAV OVERLAY
+    ============================================================ */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(6,10,8,0.975);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+    .mobile-menu.open { opacity: 1; visibility: visible; }
+    .mobile-menu-links { list-style: none; margin: 0; padding: 0; text-align: center; }
+    .mobile-menu-links li {
+      margin: 2px 0;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .mobile-menu.open .mobile-menu-links li { opacity: 1; transform: none; }
+    .mobile-menu.open .mobile-menu-links li:nth-child(1) { transition-delay: 0.06s; }
+    .mobile-menu.open .mobile-menu-links li:nth-child(2) { transition-delay: 0.10s; }
+    .mobile-menu.open .mobile-menu-links li:nth-child(3) { transition-delay: 0.14s; }
+    .mobile-menu.open .mobile-menu-links li:nth-child(4) { transition-delay: 0.18s; }
+    .mobile-menu.open .mobile-menu-links li:nth-child(5) { transition-delay: 0.22s; }
+    .mobile-menu.open .mobile-menu-links li:nth-child(6) { transition-delay: 0.26s; }
+    .mobile-menu.open .mobile-menu-links li:nth-child(7) { transition-delay: 0.30s; }
+    .mobile-menu.open .mobile-menu-links li:nth-child(8) { transition-delay: 0.34s; }
+    .mobile-menu.open .mobile-menu-links li:nth-child(9) { transition-delay: 0.40s; }
+    .mobile-menu-links a {
+      display: block;
+      padding: 11px 24px;
+      font-family: 'Cinzel', serif;
+      font-size: 21px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--paper);
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+    .mobile-menu-links a:hover,
+    .mobile-menu-links a:active { color: var(--gold); }
+    .mobile-menu-cta {
+      margin-top: 16px;
+      color: var(--gold) !important;
+      font-size: 15px !important;
+      letter-spacing: 4px !important;
+      border: 1px solid rgba(232,184,101,0.4);
+      border-radius: 2px;
+    }
+    /* Hamburger morphs into an X while the menu is open */
+    .hamburger { z-index: 210; position: relative; transition: transform 0.3s ease; }
+    .hamburger span { transition: transform 0.3s ease, opacity 0.2s ease; transform-origin: center; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* ============================================================
+       MOBILE-FRIENDLY PASS — process + about (and safeguards)
+    ============================================================ */
+    @media (max-width: 760px) {
+      /* Process — single column earlier so cards aren't cramped */
+      .waypoints-grid { grid-template-columns: 1fr; gap: 40px; }
+      .waypoint      { gap: 22px; }
+      .waypoint-desc { max-width: none; }
+
+      /* About — drop desktop-only edge ornaments that crowd small screens */
+      .parchment-margin-l,
+      .parchment-margin-r { display: none; }
+
+      /* Classification bar wraps instead of overflowing off-screen */
+      .dossier-class-bar  { padding: 0 20px; gap: 12px; }
+      .dossier-class-text { white-space: normal; text-align: center; line-height: 1.7; }
+
+      /* Parchment hugs its content — no forced dead space */
+      .parchment-map     { min-height: auto; }
+      .parchment-content { grid-template-columns: 1fr; align-items: start; gap: 40px; min-height: auto; }
+
+      /* Scrapbook photos stay inside the parchment */
+      .scrapbook-stack        { max-width: 258px; margin: 8px auto 0; padding-bottom: 112%; }
+      .parchment-photo-caption { text-align: center; margin-top: 26px; }
+      .parchment-page-ref     { text-align: center; display: block; }
+      .about-exhibit-label    { text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .parchment-content { padding: 30px 22px; }
+      .about-h3          { font-size: 26px; }
+      /* Give the compass diamond breathing room from the screen edge */
+      .waypoint          { gap: 18px; }
+      .waypoint-diamond  { width: 54px; height: 54px; }
+      .waypoint-numeral  { font-size: 16px; }
+      .dossier-intel-row { grid-template-columns: 66px 10px 1fr; }
+      .scrapbook-stack   { max-width: 228px; padding-bottom: 118%; }
+    }
+
   </style>
   <link rel="stylesheet" href="css/portfolio.css" />
 </head>
@@ -4998,10 +5101,25 @@
   </ul>
 
   <a href="#contact" class="btn-nav">Begin Journey</a>
-  <button class="hamburger" aria-label="Open menu">
+  <button class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
     <span></span><span></span><span></span>
   </button>
 </nav>
+
+<!-- Mobile navigation overlay -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <ul class="mobile-menu-links">
+    <li><a href="#process">Proces</a></li>
+    <li><a href="#about">Over mij</a></li>
+    <li><a href="#design">Design</a></li>
+    <li><a href="#websites">Websites</a></li>
+    <li><a href="#illustrations">Illustrations</a></li>
+    <li><a href="#social">Social</a></li>
+    <li><a href="#spline">Spline</a></li>
+    <li><a href="#deployed-systems">Live Deploys</a></li>
+    <li><a href="#contact" class="mobile-menu-cta">Begin Journey</a></li>
+  </ul>
+</div>
 
 <!-- ============================================================
      HERO — THE SUMMIT VIEW
@@ -6326,6 +6444,25 @@
 <script>
 (function () {
   'use strict';
+
+  /* ----------------------------------------------------------
+     MOBILE NAV OVERLAY
+  ---------------------------------------------------------- */
+  const hamburger = document.querySelector('.hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    const setMenu = (open) => {
+      mobileMenu.classList.toggle('open', open);
+      hamburger.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      hamburger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
+      document.body.style.overflow = open ? 'hidden' : '';
+    };
+    hamburger.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+  }
 
   /* ----------------------------------------------------------
      COMPASS CURSOR + FADING TRAIL
