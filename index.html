@@ -685,16 +685,14 @@
       overflow: hidden;
       box-shadow: 0 20px 70px rgba(0,0,0,0.65);
       min-height: 480px;
+      /* Real aged-paper photo texture */
+      background: #d8c9a8 url('assets/images/about/parchment.jpg') center center / cover no-repeat;
     }
     .parchment-map.unfurled { clip-path: inset(0% 0 0% 0); }
 
-    /* Parchment background SVG */
-    .parchment-bg-svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
+    /* Old generated-SVG parchment (base texture + compass/route) replaced by
+       the photo texture above — hidden for a cleaner, more legible surface */
+    .parchment-bg-svg { display: none; }
 
     /* Route path draws itself */
     .route-path {
