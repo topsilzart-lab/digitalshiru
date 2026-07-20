@@ -1245,20 +1245,27 @@
     }
     .waypoints-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px 56px;
       position: relative;
     }
     .waypoint {
       display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      text-align: left;
+      gap: 26px;
+    }
+    .waypoint-body {
+      display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 22px;
+      gap: 12px;
+      padding-top: 6px;
     }
     .waypoint-diamond {
       width: 62px;
       height: 62px;
+      flex-shrink: 0;
       border: 1px solid rgba(232,184,101,0.35);
       transform: rotate(45deg);
       display: flex;
@@ -1303,18 +1310,20 @@
     }
     .waypoint-title {
       font-family: 'Cinzel', serif;
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 700;
-      letter-spacing: 3.5px;
+      letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--paper);
     }
     .waypoint-desc {
-      font-size: 13px;
-      line-height: 1.72;
+      font-size: 14px;
+      line-height: 1.75;
       color: var(--paper-muted);
-      max-width: 196px;
+      max-width: 46ch;
+      margin: 0;
     }
+    .waypoint-desc + .waypoint-desc { margin-top: 4px; }
 
     /* ============================================================
        CHAPTER IV — FIELD REPORTS (Testimonials)
@@ -2224,15 +2233,15 @@
       flex-shrink: 0;
     }
 
-    /* Process — coordinate under waypoint title */
+    /* Process — waypoint marker eyebrow above the title */
     .waypoint-coord {
       font-family: 'Cinzel', serif;
-      font-size: 7.5px;
-      letter-spacing: 2px;
+      font-size: 10px;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
       color: var(--gold);
-      opacity: 0.32;
-      margin-top: -14px;
+      opacity: 0.55;
+      margin: 0;
     }
 
     /* Process — route line feels more like expedition trail */
@@ -5069,6 +5078,168 @@
 </section>
 
 <!-- ============================================================
+     MIJN PROCES (Werkwijze) — placed directly under the header
+============================================================ -->
+<div id="process">
+
+  <div class="topo-overlay" aria-hidden="true">
+    <svg viewBox="0 0 1200 560" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <!-- Terrain peak A: left cluster -->
+      <ellipse cx="160" cy="280" rx="55" ry="28" fill="none" stroke="#e8b865" stroke-width="0.8"/>
+      <ellipse cx="160" cy="280" rx="110" ry="56" fill="none" stroke="#e8b865" stroke-width="0.6"/>
+      <ellipse cx="160" cy="280" rx="168" ry="84" fill="none" stroke="#e8b865" stroke-width="0.45"/>
+      <ellipse cx="160" cy="280" rx="230" ry="115" fill="none" stroke="#e8b865" stroke-width="0.3"/>
+      <ellipse cx="160" cy="280" rx="295" ry="148" fill="none" stroke="#e8b865" stroke-width="0.2"/>
+      <!-- Terrain peak B: right cluster -->
+      <ellipse cx="1040" cy="280" rx="55" ry="28" fill="none" stroke="#e8b865" stroke-width="0.8"/>
+      <ellipse cx="1040" cy="280" rx="110" ry="56" fill="none" stroke="#e8b865" stroke-width="0.6"/>
+      <ellipse cx="1040" cy="280" rx="168" ry="84" fill="none" stroke="#e8b865" stroke-width="0.45"/>
+      <ellipse cx="1040" cy="280" rx="230" ry="115" fill="none" stroke="#e8b865" stroke-width="0.3"/>
+      <!-- Terrain peak C: center-top small feature -->
+      <ellipse cx="600" cy="120" rx="38" ry="22" fill="none" stroke="#e8b865" stroke-width="0.6"/>
+      <ellipse cx="600" cy="120" rx="80" ry="46" fill="none" stroke="#e8b865" stroke-width="0.4"/>
+      <ellipse cx="600" cy="120" rx="130" ry="74" fill="none" stroke="#e8b865" stroke-width="0.25"/>
+      <!-- Horizontal contour latitude lines -->
+      <line x1="0" y1="140" x2="1200" y2="140" stroke="#e8b865" stroke-width="0.3" stroke-dasharray="3 8"/>
+      <line x1="0" y1="280" x2="1200" y2="280" stroke="#e8b865" stroke-width="0.3" stroke-dasharray="3 8"/>
+      <line x1="0" y1="420" x2="1200" y2="420" stroke="#e8b865" stroke-width="0.3" stroke-dasharray="3 8"/>
+      <!-- Vertical meridian lines -->
+      <line x1="300" y1="0" x2="300" y2="560" stroke="#e8b865" stroke-width="0.25" stroke-dasharray="2 12"/>
+      <line x1="600" y1="0" x2="600" y2="560" stroke="#e8b865" stroke-width="0.25" stroke-dasharray="2 12"/>
+      <line x1="900" y1="0" x2="900" y2="560" stroke="#e8b865" stroke-width="0.25" stroke-dasharray="2 12"/>
+    </svg>
+  </div>
+
+  <div class="section-wrap">
+
+    <div class="chapter-label reveal">
+      <div class="chapter-bar"></div>
+      <div class="chapter-text">
+        <span class="chapter-num">Werkwijze</span>
+        <span class="chapter-name">Van idee tot oplevering</span>
+        <span class="chapter-coords">FIELD METHOD · COORD DS-00</span>
+      </div>
+      <div class="chapter-bar"></div>
+    </div>
+
+    <h2 class="section-h2 reveal">
+      Mijn
+      <span class="accent">proces</span>
+    </h2>
+
+    <div class="waypoints-wrap">
+      <div class="waypoints-grid">
+        <div class="waypoint reveal">
+          <div class="waypoint-diamond">
+            <div class="waypoint-pulse-ring"></div>
+            <span class="waypoint-numeral">I</span>
+            <svg class="waypoint-compass" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="22" cy="22" r="20" fill="none" stroke="#e8b865" stroke-width="0.6" opacity="0.4"/>
+              <circle cx="22" cy="22" r="9"  fill="none" stroke="#e8b865" stroke-width="0.5" opacity="0.35"/>
+              <polygon points="22,2 20,19 22,14 24,19"  fill="#e8b865"/>
+              <polygon points="22,42 20,25 22,30 24,25" fill="#5a5448"/>
+              <polygon points="2,22 19,20 14,22 19,24"  fill="#e8b865" opacity="0.7"/>
+              <polygon points="42,22 25,20 30,22 25,24" fill="#e8b865" opacity="0.7"/>
+              <polygon points="7.5,7.5 18,18 14,11 11,14"   fill="#e8b865" opacity="0.4"/>
+              <polygon points="36.5,7.5 26,18 29,11 32,14" fill="#e8b865" opacity="0.4"/>
+              <polygon points="36.5,36.5 26,26 32,29 29,32" fill="#e8b865" opacity="0.4"/>
+              <polygon points="7.5,36.5 18,26 11,29 14,32"  fill="#e8b865" opacity="0.4"/>
+              <circle cx="22" cy="22" r="2.8" fill="#d4763a"/>
+              <circle cx="22" cy="22" r="1.2" fill="#080d0a"/>
+            </svg>
+          </div>
+          <div class="waypoint-body">
+            <div class="waypoint-coord">WP-01</div>
+            <div class="waypoint-title">Ideeën & inspiratie</div>
+            <p class="waypoint-desc">Na een briefing of brainstorm begint mijn hoofd meestal direct te bruisen van de ideeën. Wanneer een duidelijke richting niet meteen ontstaat, ga ik actief op zoek naar inspiratie. Dat doe ik online, in boeken of door mijn omgeving te onderzoeken. Zo verzamel ik nieuwe invalshoeken waarmee ik verder kan.</p>
+          </div>
+        </div>
+
+        <div class="waypoint reveal d1">
+          <div class="waypoint-diamond">
+            <div class="waypoint-pulse-ring"></div>
+            <span class="waypoint-numeral">II</span>
+            <svg class="waypoint-compass" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="22" cy="22" r="20" fill="none" stroke="#e8b865" stroke-width="0.6" opacity="0.4"/>
+              <circle cx="22" cy="22" r="9"  fill="none" stroke="#e8b865" stroke-width="0.5" opacity="0.35"/>
+              <polygon points="22,2 20,19 22,14 24,19"  fill="#e8b865"/>
+              <polygon points="22,42 20,25 22,30 24,25" fill="#5a5448"/>
+              <polygon points="2,22 19,20 14,22 19,24"  fill="#e8b865" opacity="0.7"/>
+              <polygon points="42,22 25,20 30,22 25,24" fill="#e8b865" opacity="0.7"/>
+              <polygon points="7.5,7.5 18,18 14,11 11,14"   fill="#e8b865" opacity="0.4"/>
+              <polygon points="36.5,7.5 26,18 29,11 32,14" fill="#e8b865" opacity="0.4"/>
+              <polygon points="36.5,36.5 26,26 32,29 29,32" fill="#e8b865" opacity="0.4"/>
+              <polygon points="7.5,36.5 18,26 11,29 14,32"  fill="#e8b865" opacity="0.4"/>
+              <circle cx="22" cy="22" r="2.8" fill="#d4763a"/>
+              <circle cx="22" cy="22" r="1.2" fill="#080d0a"/>
+            </svg>
+          </div>
+          <div class="waypoint-body">
+            <div class="waypoint-coord">WP-02</div>
+            <div class="waypoint-title">Schetsen & onderzoeken</div>
+            <p class="waypoint-desc">Ik begin bijna altijd bij de basis: pen en papier. Door te schetsen en ideeën uit te tekenen, kan ik vrij met vormen en concepten spelen. In deze fase hoeft er nog geen verfijnd eindproduct te ontstaan. Het gaat er vooral om dat ik snel ontdek wat werkt, wat niet werkt en welke richting het meeste potentieel heeft.</p>
+          </div>
+        </div>
+
+        <div class="waypoint reveal d2">
+          <div class="waypoint-diamond">
+            <div class="waypoint-pulse-ring"></div>
+            <span class="waypoint-numeral">III</span>
+            <svg class="waypoint-compass" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="22" cy="22" r="20" fill="none" stroke="#e8b865" stroke-width="0.6" opacity="0.4"/>
+              <circle cx="22" cy="22" r="9"  fill="none" stroke="#e8b865" stroke-width="0.5" opacity="0.35"/>
+              <polygon points="22,2 20,19 22,14 24,19"  fill="#e8b865"/>
+              <polygon points="22,42 20,25 22,30 24,25" fill="#5a5448"/>
+              <polygon points="2,22 19,20 14,22 19,24"  fill="#e8b865" opacity="0.7"/>
+              <polygon points="42,22 25,20 30,22 25,24" fill="#e8b865" opacity="0.7"/>
+              <polygon points="7.5,7.5 18,18 14,11 11,14"   fill="#e8b865" opacity="0.4"/>
+              <polygon points="36.5,7.5 26,18 29,11 32,14" fill="#e8b865" opacity="0.4"/>
+              <polygon points="36.5,36.5 26,26 32,29 29,32" fill="#e8b865" opacity="0.4"/>
+              <polygon points="7.5,36.5 18,26 11,29 14,32"  fill="#e8b865" opacity="0.4"/>
+              <circle cx="22" cy="22" r="2.8" fill="#d4763a"/>
+              <circle cx="22" cy="22" r="1.2" fill="#080d0a"/>
+            </svg>
+          </div>
+          <div class="waypoint-body">
+            <div class="waypoint-coord">WP-03</div>
+            <div class="waypoint-title">Experimenteren & versnellen</div>
+            <p class="waypoint-desc">Afhankelijk van het project onderzoek ik hoe digitale technieken en AI het proces kunnen ondersteunen. Ik gebruik deze middelen bijvoorbeeld om concepten zichtbaar te maken, kleurvariaties te testen, mock-ups te ontwikkelen of verschillende oplossingen te vergelijken.</p>
+            <p class="waypoint-desc">Bij digitale producten kan ik ideeën direct vertalen naar prototypes, code en duidelijke instructies. Technologie is voor mij geen vervanging van creativiteit, maar een hulpmiddel om sneller te onderzoeken en betere keuzes te maken.</p>
+          </div>
+        </div>
+
+        <div class="waypoint reveal d3">
+          <div class="waypoint-diamond">
+            <div class="waypoint-pulse-ring"></div>
+            <span class="waypoint-numeral">IV</span>
+            <svg class="waypoint-compass" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="22" cy="22" r="20" fill="none" stroke="#e8b865" stroke-width="0.6" opacity="0.4"/>
+              <circle cx="22" cy="22" r="9"  fill="none" stroke="#e8b865" stroke-width="0.5" opacity="0.35"/>
+              <polygon points="22,2 20,19 22,14 24,19"  fill="#e8b865"/>
+              <polygon points="22,42 20,25 22,30 24,25" fill="#5a5448"/>
+              <polygon points="2,22 19,20 14,22 19,24"  fill="#e8b865" opacity="0.7"/>
+              <polygon points="42,22 25,20 30,22 25,24" fill="#e8b865" opacity="0.7"/>
+              <polygon points="7.5,7.5 18,18 14,11 11,14"   fill="#e8b865" opacity="0.4"/>
+              <polygon points="36.5,7.5 26,18 29,11 32,14" fill="#e8b865" opacity="0.4"/>
+              <polygon points="36.5,36.5 26,26 32,29 29,32" fill="#e8b865" opacity="0.4"/>
+              <polygon points="7.5,36.5 18,26 11,29 14,32"  fill="#e8b865" opacity="0.4"/>
+              <circle cx="22" cy="22" r="2.8" fill="#d4763a"/>
+              <circle cx="22" cy="22" r="1.2" fill="#080d0a"/>
+            </svg>
+          </div>
+          <div class="waypoint-body">
+            <div class="waypoint-coord">WP-04</div>
+            <div class="waypoint-title">Uitwerken & opleveren</div>
+            <p class="waypoint-desc">Wanneer de basis stevig staat, werk ik het gekozen concept verder uit. Per project kies ik de technieken, programma’s en werkwijze die het beste bij de opdracht passen.</p>
+            <p class="waypoint-desc">In deze laatste fase verfijn ik alle onderdelen en controleer ik of het eindproduct aansluit bij de wensen, doelstellingen en technische specificaties. Daarna lever ik het project verzorgd en gebruiksklaar op.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
      PROLOGUE — WHO WE ARE (About / Map unfold)
 ============================================================ -->
 <div id="about">
@@ -5964,163 +6135,6 @@
     </div><!-- /.ds-grid -->
   </div><!-- /.section-wrap -->
 </div><!-- /#deployed-systems -->
-
-<!-- ============================================================
-     CHAPTER III — THE ROUTE (Process)
-============================================================ -->
-<div id="process">
-
-  <!-- Topographic contour overlay -->
-  <div class="topo-overlay" aria-hidden="true">
-    <svg viewBox="0 0 1200 560" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <!-- Terrain peak A: left cluster -->
-      <ellipse cx="160" cy="280" rx="55" ry="28" fill="none" stroke="#e8b865" stroke-width="0.8"/>
-      <ellipse cx="160" cy="280" rx="110" ry="56" fill="none" stroke="#e8b865" stroke-width="0.6"/>
-      <ellipse cx="160" cy="280" rx="168" ry="84" fill="none" stroke="#e8b865" stroke-width="0.45"/>
-      <ellipse cx="160" cy="280" rx="230" ry="115" fill="none" stroke="#e8b865" stroke-width="0.3"/>
-      <ellipse cx="160" cy="280" rx="295" ry="148" fill="none" stroke="#e8b865" stroke-width="0.2"/>
-      <!-- Terrain peak B: right cluster -->
-      <ellipse cx="1040" cy="280" rx="55" ry="28" fill="none" stroke="#e8b865" stroke-width="0.8"/>
-      <ellipse cx="1040" cy="280" rx="110" ry="56" fill="none" stroke="#e8b865" stroke-width="0.6"/>
-      <ellipse cx="1040" cy="280" rx="168" ry="84" fill="none" stroke="#e8b865" stroke-width="0.45"/>
-      <ellipse cx="1040" cy="280" rx="230" ry="115" fill="none" stroke="#e8b865" stroke-width="0.3"/>
-      <!-- Terrain peak C: center-top small feature -->
-      <ellipse cx="600" cy="120" rx="38" ry="22" fill="none" stroke="#e8b865" stroke-width="0.6"/>
-      <ellipse cx="600" cy="120" rx="80" ry="46" fill="none" stroke="#e8b865" stroke-width="0.4"/>
-      <ellipse cx="600" cy="120" rx="130" ry="74" fill="none" stroke="#e8b865" stroke-width="0.25"/>
-      <!-- Horizontal contour latitude lines -->
-      <line x1="0" y1="140" x2="1200" y2="140" stroke="#e8b865" stroke-width="0.3" stroke-dasharray="3 8"/>
-      <line x1="0" y1="280" x2="1200" y2="280" stroke="#e8b865" stroke-width="0.3" stroke-dasharray="3 8"/>
-      <line x1="0" y1="420" x2="1200" y2="420" stroke="#e8b865" stroke-width="0.3" stroke-dasharray="3 8"/>
-      <!-- Vertical meridian lines -->
-      <line x1="300" y1="0" x2="300" y2="560" stroke="#e8b865" stroke-width="0.25" stroke-dasharray="2 12"/>
-      <line x1="600" y1="0" x2="600" y2="560" stroke="#e8b865" stroke-width="0.25" stroke-dasharray="2 12"/>
-      <line x1="900" y1="0" x2="900" y2="560" stroke="#e8b865" stroke-width="0.25" stroke-dasharray="2 12"/>
-    </svg>
-  </div>
-
-  <div class="section-wrap">
-
-    <div class="chapter-label reveal">
-      <div class="chapter-bar"></div>
-      <div class="chapter-text">
-        <span class="chapter-num">Chapter III</span>
-        <span class="chapter-name">The Route</span>
-        <span class="chapter-coords">35°41′N · 139°41′E · COORD DS-03</span>
-      </div>
-      <div class="chapter-bar"></div>
-    </div>
-
-    <h2 class="section-h2 reveal">
-      Four waypoints
-      <span class="accent">from brief to launch</span>
-    </h2>
-
-    <div class="waypoints-wrap">
-      <div class="waypoints-line"></div>
-      <div class="waypoints-grid">
-
-        <div class="waypoint reveal">
-          <div class="waypoint-diamond">
-            <div class="waypoint-pulse-ring"></div>
-            <span class="waypoint-numeral">I</span>
-            <svg class="waypoint-compass" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="22" cy="22" r="20" fill="none" stroke="#e8b865" stroke-width="0.6" opacity="0.4"/>
-              <circle cx="22" cy="22" r="9"  fill="none" stroke="#e8b865" stroke-width="0.5" opacity="0.35"/>
-              <polygon points="22,2 20,19 22,14 24,19"  fill="#e8b865"/>
-              <polygon points="22,42 20,25 22,30 24,25" fill="#5a5448"/>
-              <polygon points="2,22 19,20 14,22 19,24"  fill="#e8b865" opacity="0.7"/>
-              <polygon points="42,22 25,20 30,22 25,24" fill="#e8b865" opacity="0.7"/>
-              <polygon points="7.5,7.5 18,18 14,11 11,14"   fill="#e8b865" opacity="0.4"/>
-              <polygon points="36.5,7.5 26,18 29,11 32,14" fill="#e8b865" opacity="0.4"/>
-              <polygon points="36.5,36.5 26,26 32,29 29,32" fill="#e8b865" opacity="0.4"/>
-              <polygon points="7.5,36.5 18,26 11,29 14,32"  fill="#e8b865" opacity="0.4"/>
-              <circle cx="22" cy="22" r="2.8" fill="#d4763a"/>
-              <circle cx="22" cy="22" r="1.2" fill="#080d0a"/>
-            </svg>
-          </div>
-          <div class="waypoint-title">Scout</div>
-          <div class="waypoint-coord">WP-01 · 0°0′N</div>
-          <p class="waypoint-desc">We map your territory — goals, audience, competitive landscape, and the digital ground you need to claim.</p>
-        </div>
-
-        <div class="waypoint reveal d1">
-          <div class="waypoint-diamond">
-            <div class="waypoint-pulse-ring"></div>
-            <span class="waypoint-numeral">II</span>
-            <svg class="waypoint-compass" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="22" cy="22" r="20" fill="none" stroke="#e8b865" stroke-width="0.6" opacity="0.4"/>
-              <circle cx="22" cy="22" r="9"  fill="none" stroke="#e8b865" stroke-width="0.5" opacity="0.35"/>
-              <polygon points="22,2 20,19 22,14 24,19"  fill="#e8b865"/>
-              <polygon points="22,42 20,25 22,30 24,25" fill="#5a5448"/>
-              <polygon points="2,22 19,20 14,22 19,24"  fill="#e8b865" opacity="0.7"/>
-              <polygon points="42,22 25,20 30,22 25,24" fill="#e8b865" opacity="0.7"/>
-              <polygon points="7.5,7.5 18,18 14,11 11,14"   fill="#e8b865" opacity="0.4"/>
-              <polygon points="36.5,7.5 26,18 29,11 32,14" fill="#e8b865" opacity="0.4"/>
-              <polygon points="36.5,36.5 26,26 32,29 29,32" fill="#e8b865" opacity="0.4"/>
-              <polygon points="7.5,36.5 18,26 11,29 14,32"  fill="#e8b865" opacity="0.4"/>
-              <circle cx="22" cy="22" r="2.8" fill="#d4763a"/>
-              <circle cx="22" cy="22" r="1.2" fill="#080d0a"/>
-            </svg>
-          </div>
-          <div class="waypoint-title">Plan</div>
-          <div class="waypoint-coord">WP-02 · 30°0′E</div>
-          <p class="waypoint-desc">Strategy becomes blueprint. Wireframes, narrative structure, and automation architecture plotted before a single pixel is placed.</p>
-        </div>
-
-        <div class="waypoint reveal d2">
-          <div class="waypoint-diamond">
-            <div class="waypoint-pulse-ring"></div>
-            <span class="waypoint-numeral">III</span>
-            <svg class="waypoint-compass" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="22" cy="22" r="20" fill="none" stroke="#e8b865" stroke-width="0.6" opacity="0.4"/>
-              <circle cx="22" cy="22" r="9"  fill="none" stroke="#e8b865" stroke-width="0.5" opacity="0.35"/>
-              <polygon points="22,2 20,19 22,14 24,19"  fill="#e8b865"/>
-              <polygon points="22,42 20,25 22,30 24,25" fill="#5a5448"/>
-              <polygon points="2,22 19,20 14,22 19,24"  fill="#e8b865" opacity="0.7"/>
-              <polygon points="42,22 25,20 30,22 25,24" fill="#e8b865" opacity="0.7"/>
-              <polygon points="7.5,7.5 18,18 14,11 11,14"   fill="#e8b865" opacity="0.4"/>
-              <polygon points="36.5,7.5 26,18 29,11 32,14" fill="#e8b865" opacity="0.4"/>
-              <polygon points="36.5,36.5 26,26 32,29 29,32" fill="#e8b865" opacity="0.4"/>
-              <polygon points="7.5,36.5 18,26 11,29 14,32"  fill="#e8b865" opacity="0.4"/>
-              <circle cx="22" cy="22" r="2.8" fill="#d4763a"/>
-              <circle cx="22" cy="22" r="1.2" fill="#080d0a"/>
-            </svg>
-          </div>
-          <div class="waypoint-title">Build</div>
-          <div class="waypoint-coord">WP-03 · 60°0′E</div>
-          <p class="waypoint-desc">The expedition takes form. Cinematic design, precision code, and intelligent automation assembled with obsessive craft.</p>
-        </div>
-
-        <div class="waypoint reveal d3">
-          <div class="waypoint-diamond">
-            <div class="waypoint-pulse-ring"></div>
-            <span class="waypoint-numeral">IV</span>
-            <svg class="waypoint-compass" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="22" cy="22" r="20" fill="none" stroke="#e8b865" stroke-width="0.6" opacity="0.4"/>
-              <circle cx="22" cy="22" r="9"  fill="none" stroke="#e8b865" stroke-width="0.5" opacity="0.35"/>
-              <polygon points="22,2 20,19 22,14 24,19"  fill="#e8b865"/>
-              <polygon points="22,42 20,25 22,30 24,25" fill="#5a5448"/>
-              <polygon points="2,22 19,20 14,22 19,24"  fill="#e8b865" opacity="0.7"/>
-              <polygon points="42,22 25,20 30,22 25,24" fill="#e8b865" opacity="0.7"/>
-              <polygon points="7.5,7.5 18,18 14,11 11,14"   fill="#e8b865" opacity="0.4"/>
-              <polygon points="36.5,7.5 26,18 29,11 32,14" fill="#e8b865" opacity="0.4"/>
-              <polygon points="36.5,36.5 26,26 32,29 29,32" fill="#e8b865" opacity="0.4"/>
-              <polygon points="7.5,36.5 18,26 11,29 14,32"  fill="#e8b865" opacity="0.4"/>
-              <circle cx="22" cy="22" r="2.8" fill="#d4763a"/>
-              <circle cx="22" cy="22" r="1.2" fill="#080d0a"/>
-            </svg>
-          </div>
-          <div class="waypoint-title">Launch</div>
-          <div class="waypoint-coord">WP-04 · 90°0′E</div>
-          <p class="waypoint-desc">You plant your flag. We hand off a fully operational base camp — documented, trained, and ready to compound.</p>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>
-
 
 <!-- ============================================================
      THE NEXT EXPEDITION (CTA)
