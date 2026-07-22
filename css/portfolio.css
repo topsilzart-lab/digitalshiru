@@ -274,8 +274,12 @@
 
 /* side panel — slides out beside the card so the live site underneath stays clickable */
 .web-info {
-  position: absolute; top: 0; height: 100%; width: min(300px, 84vw);
-  z-index: 6; padding: 26px 24px;
+  /* Content (title, copy, 4 meta rows, button) is taller than the card, so a
+     fixed height:100% pushed it out top and bottom. Grow with the content and
+     stay centred on the card instead. */
+  position: absolute; top: 50%; height: auto; min-height: 100%;
+  width: min(300px, 84vw);
+  z-index: 6; padding: 24px 22px;
   display: flex; flex-direction: column; justify-content: center;
   background: rgba(9,13,10,0.98);
   border: 1px solid rgba(232,184,101,0.22);
@@ -283,16 +287,16 @@
   opacity: 0; pointer-events: none;
   transition: opacity .35s ease, transform .5s cubic-bezier(.22,1,.36,1);
 }
-.web-card:nth-child(odd) .web-info  { left: 100%;  border-radius: 0 10px 10px 0; border-left: 0; transform: translateX(-20px); }
-.web-card:nth-child(even) .web-info { right: 100%; border-radius: 10px 0 0 10px; border-right: 0; transform: translateX(20px); }
-.web-gallery .web-card:hover .web-info { opacity: 1; transform: none; pointer-events: auto; }
+.web-card:nth-child(odd) .web-info  { left: 100%;  border-radius: 0 10px 10px 0; border-left: 0; transform: translate(-20px, -50%); }
+.web-card:nth-child(even) .web-info { right: 100%; border-radius: 10px 0 0 10px; border-right: 0; transform: translate(20px, -50%); }
+.web-gallery .web-card:hover .web-info { opacity: 1; transform: translate(0, -50%); pointer-events: auto; }
 
-.web-tag { font-family: 'Cinzel', serif; font-size: 7px; letter-spacing: 3px; text-transform: uppercase; color: var(--teal); opacity: 0.8; margin-bottom: 14px; }
+.web-tag { font-family: 'Cinzel', serif; font-size: 7px; letter-spacing: 3px; text-transform: uppercase; color: var(--teal); opacity: 0.8; margin-bottom: 10px; }
 .web-title { font-family: 'Cinzel', serif; font-size: 22px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--paper); line-height: 1.14; margin: 0 0 7px; }
-.web-sub { font-family: 'Cinzel', serif; font-size: 8.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); opacity: 0.65; margin-bottom: 16px; }
-.web-rule { height: 1px; width: 56px; background: rgba(232,184,101,0.16); margin-bottom: 16px; }
-.web-desc { font-family: 'Inter', sans-serif; font-size: 12px; line-height: 1.6; color: var(--paper-muted); opacity: 0.82; margin: 0 0 18px; }
-.web-meta { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+.web-sub { font-family: 'Cinzel', serif; font-size: 8.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); opacity: 0.65; margin-bottom: 12px; }
+.web-rule { height: 1px; width: 56px; background: rgba(232,184,101,0.16); margin-bottom: 12px; }
+.web-desc { font-family: 'Inter', sans-serif; font-size: 12px; line-height: 1.6; color: var(--paper-muted); opacity: 0.82; margin: 0 0 14px; }
+.web-meta { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
 .web-meta-row { display: flex; gap: 10px; align-items: baseline; }
 .web-meta-key { font-family: 'Cinzel', serif; font-size: 6.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); opacity: 0.5; width: 52px; flex-shrink: 0; }
 .web-meta-val { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 1px; text-transform: uppercase; color: var(--paper-muted); opacity: 0.72; }
