@@ -5411,10 +5411,12 @@
 ============================================================ -->
 <div id="about">
   <!-- Adventure props: field journal + quill, drifting behind the dossier -->
-  <div class="about-prop about-prop--journal" aria-hidden="true" data-speed="150" data-rot="-7" data-rot-span="5" data-max-opacity="0.85">
+  <div class="about-prop about-prop--journal" aria-hidden="true"
+       data-dx="300" data-dy="-360" data-rot="-12" data-rot-span="14" data-max-opacity="0.9">
     <img src="assets/images/props/journal.webp" alt="" loading="lazy" decoding="async">
   </div>
-  <div class="about-prop about-prop--quill" aria-hidden="true" data-speed="-230" data-rot="9" data-rot-span="-7" data-max-opacity="0.8">
+  <div class="about-prop about-prop--quill" aria-hidden="true"
+       data-dx="-320" data-dy="400" data-rot="16" data-rot-span="-18" data-max-opacity="0.85">
     <img src="assets/images/props/quill.webp" alt="" loading="lazy" decoding="async">
   </div>
 
@@ -7593,13 +7595,17 @@
     if (p <= 0 || p >= 1) { props.forEach(function (x) { x.style.opacity = 0; }); return; }
     var fade = Math.min(1, Math.min(p, 1 - p) / 0.14);
     props.forEach(function (el) {
-      var speed = parseFloat(el.dataset.speed || '150');
+      var dx = parseFloat(el.dataset.dx || '0');
+      var dy = parseFloat(el.dataset.dy || '0');
       var rot = parseFloat(el.dataset.rot || '0');
       var span = parseFloat(el.dataset.rotSpan || '0');
       var max = parseFloat(el.dataset.maxOpacity || '0.85');
-      var y = (0.5 - p) * speed;              // drifts against the scroll
-      var a = rot + (p - 0.5) * span;
-      el.style.transform = 'translate3d(0,' + y.toFixed(1) + 'px,0) rotate(' + a.toFixed(2) + 'deg)';
+      // travels diagonally in from its corner and slides on behind the parchment
+      var t = p - 0.5;
+      var x = t * dx;
+      var y = t * dy;
+      var a = rot + t * span;
+      el.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) rotate(' + a.toFixed(2) + 'deg)';
       el.style.opacity = (fade * max).toFixed(3);
     });
   }
