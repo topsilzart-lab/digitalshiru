@@ -799,6 +799,6 @@ footer .fc-coords span { color: var(--paper-muted); opacity: 0.95; }
 }
 .about-prop img { width: 100%; height: auto; display: block; }
 .about-prop--journal { left: -74px;  bottom: 6%; width: 320px; }
-.about-prop--quill   { right: -66px; top: 10%;   width: 340px; }
+.about-prop--quill   { right: -66px; top: 26%;   width: 340px; }
 @media (max-width: 1180px) { .about-prop { display: none; } }
 @media (prefers-reduced-motion: reduce) { .about-prop { display: none; } }
