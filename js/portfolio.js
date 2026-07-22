@@ -18,6 +18,21 @@
       document.head.appendChild(s);
     };
 
+    /* Safety net: a scene created while its card is off-screen can sit at the
+       viewer's default canvas size until something makes it re-measure. */
+    let nudgeTimer = null;
+    const nudgeResize = () => {
+      clearTimeout(nudgeTimer);
+      nudgeTimer = setTimeout(() => window.dispatchEvent(new Event('resize')), 60);
+    };
+
+    /* Scroll over a scene should scroll the page, not zoom the camera.
+       Swallowing the wheel event before it reaches the canvas keeps drag-to-pan
+       intact while leaving the page's own scrolling untouched (no preventDefault). */
+    const blockWheelZoom = (card) => {
+      card.addEventListener('wheel', (e) => e.stopPropagation(), { capture: true });
+    };
+
     const loadCard = (card) => {
       if (card.dataset.loaded) return;
       card.dataset.loaded = '1';
@@ -25,11 +40,18 @@
       const viewer = document.createElement('spline-viewer');
       viewer.setAttribute('url', card.dataset.url);
       (card.querySelector('.spline-card-stage') || card).appendChild(viewer);
-      const done = () => card.classList.add('is-loaded');
+      const done = () => {
+        card.classList.add('is-loaded');
+        nudgeResize();
+        setTimeout(nudgeResize, 400);
+        setTimeout(nudgeResize, 1400);
+      };
       viewer.addEventListener('load', done);
       viewer.addEventListener('load-complete', done);
       setTimeout(done, 9000); // fallback if the load event never fires
     };
+
+    splineCards.forEach(blockWheelZoom);
 
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
