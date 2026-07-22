@@ -560,10 +560,15 @@
   animation: brands-scroll 40s linear infinite;
 }
 .brands-bar:hover .brands-track { animation-play-state: paused; }
+/* Logos are pre-rendered as transparent light silhouettes, so no filter hack.
+   A fixed slot + contain keeps very wide and very tall marks optically equal. */
 .brands-logo {
-  height: clamp(32px,3.6vw,44px); width: auto; flex: none;
-  filter: grayscale(1) invert(1);
-  opacity: 0.55; transition: opacity .35s ease;
+  height: clamp(34px,3.8vw,46px);
+  width: clamp(100px,11vw,150px);
+  object-fit: contain;
+  flex: none;
+  opacity: 0.62;
+  transition: opacity .35s ease;
 }
 .brands-logo:hover { opacity: 1; }
 @keyframes brands-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
