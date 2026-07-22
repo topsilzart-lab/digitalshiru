@@ -784,3 +784,21 @@ footer .fc-coords span { color: var(--paper-muted); opacity: 0.95; }
 .rope-swinger img { width: 100%; height: auto; display: block; }
 @media (max-width: 1100px) { .rope-swinger { display: none; } }
 @media (prefers-reduced-motion: reduce) { .rope-swinger { display: none; } }
+
+/* ---- Adventure props: field journal + quill drifting behind the About dossier ---- */
+#about .section-wrap,
+#about .dossier-class-bar,
+#about .parchment-stage { position: relative; z-index: 1; }
+.about-prop {
+  position: absolute;
+  z-index: 0;                /* behind the parchment, never over the text */
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 26px 34px rgba(0,0,0,0.62));
+}
+.about-prop img { width: 100%; height: auto; display: block; }
+.about-prop--journal { left: -74px;  bottom: 6%; width: 320px; }
+.about-prop--quill   { right: -66px; top: 10%;   width: 340px; }
+@media (max-width: 1180px) { .about-prop { display: none; } }
+@media (prefers-reduced-motion: reduce) { .about-prop { display: none; } }

@@ -5410,6 +5410,14 @@
      PROLOGUE — WHO WE ARE (About / Map unfold)
 ============================================================ -->
 <div id="about">
+  <!-- Adventure props: field journal + quill, drifting behind the dossier -->
+  <div class="about-prop about-prop--journal" aria-hidden="true" data-speed="150" data-rot="-7" data-rot-span="5" data-max-opacity="0.85">
+    <img src="assets/images/props/journal.webp" alt="" loading="lazy" decoding="async">
+  </div>
+  <div class="about-prop about-prop--quill" aria-hidden="true" data-speed="-230" data-rot="9" data-rot-span="-7" data-max-opacity="0.8">
+    <img src="assets/images/props/quill.webp" alt="" loading="lazy" decoding="async">
+  </div>
+
   <div class="section-wrap">
     <div class="chapter-label reveal">
       <div class="chapter-bar"></div>
@@ -7561,6 +7569,39 @@
     var op = 0.6 * Math.min(1, Math.min(p, 1 - p) / 0.08);
     coin.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) rotate(' + deg.toFixed(1) + 'deg)';
     coin.style.opacity = op.toFixed(3);
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, { passive: true, capture: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  update();
+})();
+
+/* Adventure props: journal + quill drift behind the About dossier */
+(function () {
+  var host = document.getElementById('about');
+  var props = [].slice.call(document.querySelectorAll('.about-prop'));
+  if (!host || !props.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var ticking = false;
+  function update() {
+    ticking = false;
+    if (window.innerWidth <= 1180) { props.forEach(function (p) { p.style.opacity = 0; }); return; }
+    var vh = window.innerHeight;
+    var r = host.getBoundingClientRect();
+    var p = (vh - r.top) / (vh + r.height);   // 0 entering .. 1 leaving
+    if (p <= 0 || p >= 1) { props.forEach(function (x) { x.style.opacity = 0; }); return; }
+    var fade = Math.min(1, Math.min(p, 1 - p) / 0.14);
+    props.forEach(function (el) {
+      var speed = parseFloat(el.dataset.speed || '150');
+      var rot = parseFloat(el.dataset.rot || '0');
+      var span = parseFloat(el.dataset.rotSpan || '0');
+      var max = parseFloat(el.dataset.maxOpacity || '0.85');
+      var y = (0.5 - p) * speed;              // drifts against the scroll
+      var a = rot + (p - 0.5) * span;
+      el.style.transform = 'translate3d(0,' + y.toFixed(1) + 'px,0) rotate(' + a.toFixed(2) + 'deg)';
+      el.style.opacity = (fade * max).toFixed(3);
+    });
   }
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
   window.addEventListener('scroll', onScroll, { passive: true, capture: true });
