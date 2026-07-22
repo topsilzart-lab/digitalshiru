@@ -33,15 +33,44 @@
       card.addEventListener('wheel', (e) => e.stopPropagation(), { capture: true });
     };
 
+    /* A Spline scene renders at a fixed world scale: shrink the container and
+       it crops rather than scales down, which is why the scenes only showed a
+       fragment in these cards. So render each scene at the size it was framed
+       for (data-design="WxH") and CSS-scale that down into the card, which
+       brings the whole composition back. */
+    const applyDesignScale = (card) => {
+      const holder = card.querySelector('.spline-scale');
+      if (!holder) return;
+      const d = (card.dataset.design || '').split('x').map(Number);
+      const dw = d[0], dh = d[1];
+      if (!dw || !dh) return;
+      const r = card.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      holder.style.width = dw + 'px';
+      holder.style.height = dh + 'px';
+      const s = Math.max(r.width / dw, r.height / dh);
+      holder.style.transform = 'translate(-50%, -50%) scale(' + s + ')';
+    };
+
     const loadCard = (card) => {
       if (card.dataset.loaded) return;
       card.dataset.loaded = '1';
       ensureSplineLib();
       const viewer = document.createElement('spline-viewer');
       viewer.setAttribute('url', card.dataset.url);
-      (card.querySelector('.spline-card-stage') || card).appendChild(viewer);
+      const stage = card.querySelector('.spline-card-stage') || card;
+      if (card.dataset.design) {
+        const holder = document.createElement('div');
+        holder.className = 'spline-scale';
+        holder.appendChild(viewer);
+        stage.appendChild(holder);
+        applyDesignScale(card);
+      } else {
+        stage.appendChild(viewer);
+      }
       const done = () => {
         card.classList.add('is-loaded');
+        applyDesignScale(card);
         nudgeResize();
         setTimeout(nudgeResize, 400);
         setTimeout(nudgeResize, 1400);
@@ -50,6 +79,12 @@
       viewer.addEventListener('load-complete', done);
       setTimeout(done, 9000); // fallback if the load event never fires
     };
+
+    let rescaleTimer = null;
+    window.addEventListener('resize', () => {
+      clearTimeout(rescaleTimer);
+      rescaleTimer = setTimeout(() => splineCards.forEach(applyDesignScale), 120);
+    }, { passive: true });
 
     splineCards.forEach(blockWheelZoom);
 
