@@ -5172,11 +5172,13 @@
 <section id="hero">
 
   <!-- Layer 0 — Background video -->
-  <!-- Poster paints instantly; the 12MB video is fetched only after load,
-       on pointer-capable screens, and never on metered/reduced-motion setups. -->
-  <video class="hero-video" muted loop playsinline preload="none"
+  <!-- Poster paints instantly; the video is fetched only after load, on
+       pointer-capable screens, and never on metered/reduced-motion setups.
+       VP9/WebM first (0.99MB), H.264 fallback (1.29MB). -->
+  <video class="hero-video" autoplay muted loop playsinline preload="none"
          poster="assets/images/hero/hero-poster.jpg"
-         data-src="assets/videos/hero/Multi-Shot_Video_-_pixar_disney_3d_art_Cinematic_3D_adventure_hero_banner,_inspired_by_Uncharted_an.mp4"></video>
+         data-src="assets/videos/hero/hero.webm"
+         data-src-fallback="assets/videos/hero/hero.mp4"></video>
   <div class="hero-video-overlay"></div>
 
   <!-- Layer 1 — Sky -->
@@ -6522,7 +6524,8 @@
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (smallScreen || reduced || tooCostly) return;   // poster only
     var start = function () {
-      v.src = v.dataset.src;
+      var canWebm = v.canPlayType && v.canPlayType('video/webm; codecs="vp9"');
+      v.src = (canWebm ? v.dataset.src : v.dataset.srcFallback) || v.dataset.src;
       v.load();
       var p = v.play();
       if (p && p.catch) p.catch(function () {});
