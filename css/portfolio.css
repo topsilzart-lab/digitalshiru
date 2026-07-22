@@ -305,10 +305,15 @@
 }
 
 /* ---- TikTok showcase (real content) ---- */
+/* 9 clips: a fixed 3-column grid fills exactly 3x3 with no orphan card, and
+   it is what the nth-child(3n-1) stagger below is designed for. auto-fill
+   resolved to 4 columns, which left one card alone and scattered the offset. */
 .tt-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  max-width: 1020px;
+  margin-inline: auto;
 }
 .tt-card {
   position: relative;
@@ -402,8 +407,15 @@
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 
+/* Below 3 columns the 3n-1 offset lands on arbitrary positions, so drop it
+   (keeping the normal hover lift) and step the grid down. */
+@media (max-width: 900px) {
+  .tt-grid { grid-template-columns: repeat(2, 1fr); max-width: 640px; }
+  .tt-card:nth-child(3n-1) { transform: none; }
+  .tt-card:nth-child(3n-1):hover { transform: translateY(-6px); }
+}
 @media (max-width: 560px) {
-  .tt-card:nth-child(3n-1), .tt-card:nth-child(3n-1):hover { transform: none; }
+  .tt-grid { grid-template-columns: 1fr; max-width: 330px; }
 }
 
 /* ---- TikTok lightbox ---- */
