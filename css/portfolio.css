@@ -802,3 +802,26 @@ footer .fc-coords span { color: var(--paper-muted); opacity: 0.95; }
 .about-prop--quill   { right: -66px; top: 26%;   width: 340px; }
 @media (max-width: 1180px) { .about-prop { display: none; } }
 @media (prefers-reduced-motion: reduce) { .about-prop { display: none; } }
+
+/* ---- Contact: invisible treasure map, lit only around the cursor ---- */
+#contact > *:not(.treasure-reveal) { position: relative; z-index: 1; }
+.treasure-reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: url('../assets/images/contact/treasure-map.jpg') center / cover no-repeat;
+  opacity: 0;
+  /* fades away slowly when the cursor leaves, comes up quickly when it enters */
+  transition: opacity 1.2s ease;
+  --mx: 50%;
+  --my: 50%;
+  --r: 230px;
+  -webkit-mask-image: radial-gradient(circle var(--r) at var(--mx) var(--my),
+                        #000 0%, rgba(0,0,0,0.72) 42%, transparent 74%);
+          mask-image: radial-gradient(circle var(--r) at var(--mx) var(--my),
+                        #000 0%, rgba(0,0,0,0.72) 42%, transparent 74%);
+}
+.treasure-reveal.is-lit { opacity: 0.82; transition: opacity .28s ease; }
+/* No cursor to follow on touch, and nothing to reveal */
+@media (hover: none) { .treasure-reveal { display: none; } }

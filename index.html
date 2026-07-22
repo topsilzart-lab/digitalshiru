@@ -6335,6 +6335,9 @@
      THE NEXT EXPEDITION (CTA)
 ============================================================ -->
 <div id="contact">
+  <!-- Hidden treasure map: only revealed in a radius around the cursor -->
+  <div class="treasure-reveal" aria-hidden="true"></div>
+
   <div class="temple-intro">
     <div class="temple-intro-corners" aria-hidden="true"></div>
     <p class="cta-eyebrow">— The final chamber awaits —</p>
@@ -7576,6 +7579,35 @@
   window.addEventListener('scroll', onScroll, { passive: true, capture: true });
   window.addEventListener('resize', onScroll, { passive: true });
   update();
+})();
+
+/* Contact: reveal the hidden treasure map in a radius around the cursor */
+(function () {
+  var host = document.getElementById('contact');
+  var layer = host && host.querySelector('.treasure-reveal');
+  if (!host || !layer) return;
+  if (!window.matchMedia('(hover: hover)').matches) return;
+
+  /* Cache the box so pointermove only ever writes style, never reads layout. */
+  var rect = null;
+  var measure = function () { rect = host.getBoundingClientRect(); };
+  measure();
+  window.addEventListener('resize', measure, { passive: true });
+  window.addEventListener('scroll', measure, { passive: true, capture: true });
+  // lazy images and reveals can shift the layout without a scroll, so re-measure
+  // the moment the cursor actually arrives
+  host.addEventListener('pointerenter', measure, { passive: true });
+
+  host.addEventListener('pointermove', function (e) {
+    if (!rect) measure();
+    layer.style.setProperty('--mx', (e.clientX - rect.left).toFixed(0) + 'px');
+    layer.style.setProperty('--my', (e.clientY - rect.top).toFixed(0) + 'px');
+    if (!layer.classList.contains('is-lit')) layer.classList.add('is-lit');
+  }, { passive: true });
+
+  host.addEventListener('pointerleave', function () {
+    layer.classList.remove('is-lit');   // slow fade back to invisible
+  }, { passive: true });
 })();
 
 /* Adventure props: journal + quill drift behind the About dossier */
