@@ -5172,9 +5172,11 @@
 <section id="hero">
 
   <!-- Layer 0 — Background video -->
-  <video class="hero-video" autoplay muted loop playsinline preload="auto">
-    <source src="assets/videos/hero/Multi-Shot_Video_-_pixar_disney_3d_art_Cinematic_3D_adventure_hero_banner,_inspired_by_Uncharted_an.mp4" type="video/mp4">
-  </video>
+  <!-- Poster paints instantly; the 12MB video is fetched only after load,
+       on pointer-capable screens, and never on metered/reduced-motion setups. -->
+  <video class="hero-video" muted loop playsinline preload="none"
+         poster="assets/images/hero/hero-poster.jpg"
+         data-src="assets/videos/hero/Multi-Shot_Video_-_pixar_disney_3d_art_Cinematic_3D_adventure_hero_banner,_inspired_by_Uncharted_an.mp4"></video>
   <div class="hero-video-overlay"></div>
 
   <!-- Layer 1 — Sky -->
@@ -5673,21 +5675,21 @@
               <div class="scrap-photo scrap-p3">
               <div class="tape tape-tl"></div>
               <div class="tape tape-br"></div>
-              <img src="assets/images/about/989eda6a-4ff7-4602-a875-cbba43c06ff1.png" alt="Expedition Log">
+              <img src="assets/images/about/scrap-3.jpg" alt="Expedition Log" loading="lazy" decoding="async">
               <div class="scrap-note">Expedition Log #03</div>
               </div>
               <!-- Photo slot 2 (mid) -->
               <div class="scrap-photo scrap-p2">
               <div class="tape tape-tr"></div>
               <div class="tape tape-bl"></div>
-              <img src="assets/images/about/ChatGPT Image 29 apr 2026, 10_15_54.png" alt="Field Notes">
+              <img src="assets/images/about/scrap-2.jpg" alt="Field Notes" loading="lazy" decoding="async">
               <div class="scrap-note">Field Notes #02</div>
               </div>
               <!-- Photo slot 1 (front) -->
               <div class="scrap-photo scrap-p1">
               <div class="tape tape-tl"></div>
               <div class="tape tape-tr"></div>
-              <img src="assets/images/about/Product_Shot_Video_Builder_Images__Color_palette__Warm__earthy_tones_inspired_by_dese.png" alt="About Digital Shiru">
+              <img src="assets/images/about/scrap-1.jpg" alt="About Digital Shiru" loading="lazy" decoding="async">
               <div class="scrap-note">52°22′N · 4°54′E</div>
               </div>
               </div>
@@ -6148,7 +6150,7 @@
 ============================================================ -->
 <section class="pf-section" id="spline">
   <!-- Adventure prop: character swinging down on a rope -->
-  <div class="rope-swinger" aria-hidden="true"><img src="assets/images/props/swinger.png" alt=""></div>
+  <div class="rope-swinger" aria-hidden="true"><img src="assets/images/props/swinger.webp" alt="" loading="lazy" decoding="async"></div>
   <div class="cat-head reveal">
     <div class="cat-head-top">
       <span class="cat-index">Chapter <span class="cat-index-num">V</span></span>
@@ -6507,6 +6509,28 @@
 <script>
 (function () {
   'use strict';
+
+  /* ----------------------------------------------------------
+     HERO VIDEO — deferred so it never blocks first paint
+  ---------------------------------------------------------- */
+  (function () {
+    var v = document.querySelector('.hero-video');
+    if (!v || !v.dataset.src) return;
+    var conn = navigator.connection || {};
+    var tooCostly = conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || '');
+    var smallScreen = window.matchMedia('(max-width: 760px)').matches;
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (smallScreen || reduced || tooCostly) return;   // poster only
+    var start = function () {
+      v.src = v.dataset.src;
+      v.load();
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+    };
+    var idle = window.requestIdleCallback || function (fn) { return setTimeout(fn, 900); };
+    if (document.readyState === 'complete') idle(start);
+    else window.addEventListener('load', function () { idle(start); }, { once: true });
+  })();
 
   /* ----------------------------------------------------------
      MOBILE NAV OVERLAY
@@ -7494,7 +7518,7 @@
     </svg>
   </button>
   <div class="lb-img-wrap">
-    <img class="lb-img" id="lb-img" src="" alt="">
+    <img class="lb-img" id="lb-img" src="" alt="" loading="lazy" decoding="async">
   </div>
   <button class="lb-nav lb-next" id="lb-next" aria-label="Volgende">
     <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -7506,7 +7530,7 @@
 </div>
 
 <!-- Adventure prop: gold coin that rolls across while scrolling the design/illustration run -->
-<div class="rolling-coin" aria-hidden="true"><img src="assets/images/props/coin.png" alt=""></div>
+<div class="rolling-coin" aria-hidden="true"><img src="assets/images/props/coin.webp" alt="" loading="lazy" decoding="async"></div>
 <script>
 (function () {
   var coin = document.querySelector('.rolling-coin');
