@@ -714,3 +714,21 @@ footer .fc-coords span { color: var(--paper-muted); opacity: 0.95; }
 .rolling-coin img { width: 100%; height: auto; display: block; }
 @media (max-width: 760px) { .rolling-coin { display: none; } }
 @media (prefers-reduced-motion: reduce) { .rolling-coin { display: none; } }
+
+/* ---- Adventure prop: character swinging down on a rope ---- */
+#spline { overflow: hidden; }
+#spline .cat-head, #spline .pf-wrap { position: relative; z-index: 2; }
+.rope-swinger {
+  position: absolute;
+  top: 0; right: -110px;
+  width: 340px;
+  z-index: 3;                 /* foreground prop, swings past the content */
+  pointer-events: none;
+  opacity: 0;
+  transform-origin: 88% -25%; /* rope anchor, above the frame */
+  will-change: transform, opacity;
+  filter: drop-shadow(0 26px 32px rgba(0,0,0,0.6));
+}
+.rope-swinger img { width: 100%; height: auto; display: block; }
+@media (max-width: 1100px) { .rope-swinger { display: none; } }
+@media (prefers-reduced-motion: reduce) { .rope-swinger { display: none; } }

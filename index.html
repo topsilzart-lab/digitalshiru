@@ -6138,6 +6138,8 @@
      PORTFOLIO · 02 — SPLINE ANIMATIONS
 ============================================================ -->
 <section class="pf-section" id="spline">
+  <!-- Adventure prop: character swinging down on a rope -->
+  <div class="rope-swinger" aria-hidden="true"><img src="assets/images/props/swinger.png" alt=""></div>
   <div class="cat-head reveal">
     <div class="cat-head-top">
       <span class="cat-index">Chapter <span class="cat-index-num">V</span></span>
@@ -7523,6 +7525,40 @@
     var op = 0.6 * Math.min(1, Math.min(p, 1 - p) / 0.08);
     coin.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) rotate(' + deg.toFixed(1) + 'deg)';
     coin.style.opacity = op.toFixed(3);
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, { passive: true, capture: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  update();
+})();
+
+/* Adventure prop: character swings down on a rope through the Spline section */
+(function () {
+  var sw = document.querySelector('.rope-swinger');
+  var host = document.getElementById('spline');
+  if (!sw || !host) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var ticking = false;
+  function update() {
+    ticking = false;
+    if (window.innerWidth <= 1100) { sw.style.opacity = 0; return; }
+    var vh = window.innerHeight;
+    var r = host.getBoundingClientRect();
+    var p = (vh - r.top) / (vh + r.height);   // 0 entering .. 1 leaving
+    if (p <= 0 || p >= 1) { sw.style.opacity = 0; return; }
+    // Aim for a screen position that slowly descends, then convert back to a
+    // position inside the section (which clips him), so he swings *down* the
+    // viewport instead of being carried straight up by the scroll.
+    var swH = sw.offsetHeight || 340;
+    var targetScreen = vh * 0.20 + vh * 0.34 * p;
+    var y = targetScreen - r.top;
+    y = Math.max(0, Math.min(r.height - swH, y));
+    // pendulum: sweeps through its lowest point mid-scroll
+    var ang = 24 * Math.cos(p * Math.PI);
+    var op = Math.min(1, Math.min(p, 1 - p) / 0.12);
+    sw.style.transform = 'translateY(' + y.toFixed(1) + 'px) rotate(' + ang.toFixed(2) + 'deg)';
+    sw.style.opacity = op.toFixed(3);
   }
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
   window.addEventListener('scroll', onScroll, { passive: true, capture: true });
