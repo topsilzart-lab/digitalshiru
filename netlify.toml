@@ -1,0 +1,49 @@
+# Static site: no build step, publish the repo root as-is.
+[build]
+  publish = "."
+  command = ""
+
+# Internal working files live in the repo but should not be reachable on the
+# live site. Netlify has no ignore list, so they are 404'd explicitly.
+[[redirects]]
+  from = "/CONTENT-DROP.md"
+  to = "/index.html"
+  status = 404
+
+[[redirects]]
+  from = "/server.js"
+  to = "/index.html"
+  status = 404
+
+# Long-lived caching for fingerprint-free assets is risky, so cache images and
+# fonts hard but let HTML always revalidate - otherwise a redeploy can leave
+# visitors on a stale page.
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# Basic hardening. No CSP here on purpose: the site loads Google Fonts, unpkg
+# (Spline), TikTok embeds and several client site iframes, so a strict policy
+# would need careful per-source work rather than a guess.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
