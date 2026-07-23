@@ -5,15 +5,19 @@
 
 # Internal working files live in the repo but should not be reachable on the
 # live site. Netlify has no ignore list, so they are 404'd explicitly.
+# force = true is required: without it an existing file wins over the rule,
+# which is why these still returned 200 on the first deploy.
 [[redirects]]
   from = "/CONTENT-DROP.md"
   to = "/index.html"
   status = 404
+  force = true
 
 [[redirects]]
   from = "/server.js"
   to = "/index.html"
   status = 404
+  force = true
 
 # Long-lived caching for fingerprint-free assets is risky, so cache images and
 # fonts hard but let HTML always revalidate - otherwise a redeploy can leave
