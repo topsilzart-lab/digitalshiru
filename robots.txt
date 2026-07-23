@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.digitalshiru.com/sitemap.xml
+Sitemap: https://digitalshiru.com/sitemap.xml

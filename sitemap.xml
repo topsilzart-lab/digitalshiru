@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.digitalshiru.com/</loc>
+    <loc>https://digitalshiru.com/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.digitalshiru.com/case-hilzijn.html</loc>
+    <loc>https://digitalshiru.com/case-hilzijn.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.digitalshiru.com/case-flamey.html</loc>
+    <loc>https://digitalshiru.com/case-flamey.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.digitalshiru.com/case-doggofit.html</loc>
+    <loc>https://digitalshiru.com/case-doggofit.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
