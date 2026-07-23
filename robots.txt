@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://digitalshiru.netlify.app/sitemap.xml
+Sitemap: https://www.digitalshiru.com/sitemap.xml
