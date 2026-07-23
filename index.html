@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <title>Digital Shiru · Creative Expedition</title>
   <meta name="description" content="Cinematic web design and intelligent automation. Welcome to the creative expedition." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -5633,40 +5636,6 @@
       <!-- Content on top of parchment -->
       <div class="parchment-content">
 
-        <!-- Dossier stat band (full width) -->
-        <div class="dossier-intel">
-            <div class="dossier-intel-row">
-              <span class="dossier-intel-key">File Ref</span>
-              <span class="dossier-intel-rule"></span>
-              <span class="dossier-intel-val">DS-FOUNDER-001</span>
-            </div>
-            <div class="dossier-intel-row">
-              <span class="dossier-intel-key">Status</span>
-              <span class="dossier-intel-rule"></span>
-              <span class="dossier-intel-val">Active · Deployed</span>
-            </div>
-            <div class="dossier-intel-row">
-              <span class="dossier-intel-key">Base</span>
-              <span class="dossier-intel-rule"></span>
-              <span class="dossier-intel-val">Helden, NL · 51°20′N 5°58′E</span>
-            </div>
-            <div class="dossier-intel-row">
-              <span class="dossier-intel-key">Spec.</span>
-              <span class="dossier-intel-rule"></span>
-              <span class="dossier-intel-val">Web · Product · AI · Visual Identity</span>
-            </div>
-            <div class="dossier-intel-row">
-              <span class="dossier-intel-key">Field Exp.</span>
-              <span class="dossier-intel-rule"></span>
-              <span class="dossier-intel-val">18 Years · Design &amp; Digital Strategy</span>
-            </div>
-            <div class="dossier-intel-row">
-              <span class="dossier-intel-key">Range</span>
-              <span class="dossier-intel-rule"></span>
-              <span class="dossier-intel-val">Global · Remote Capable</span>
-            </div>
-          </div>
-
         <!-- Left: the story -->
         <div class="parchment-text">
 
@@ -6372,23 +6341,35 @@
       </div>
       <div class="temple-dust-wrap" id="templeDust"></div>
       <div class="temple-form-wrap">
-        <form class="temple-form" id="templeForm">
+        <!-- Netlify Forms: data-netlify makes Netlify capture the submission at
+             build time. The honeypot field is a spam trap: real people never
+             fill it in, bots do. Submissions land in the Netlify dashboard and
+             are emailed on (set the notification address once, under
+             Forms > Settings). -->
+        <form class="temple-form" id="templeForm"
+              name="contact" method="POST"
+              data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="tf-hp" aria-hidden="true">
+            <label>Laat dit veld leeg: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
           <div class="temple-form-title">Send a scroll</div>
           <div class="tf-row">
             <div class="tf-field">
               <label for="tf-name">Name</label>
-              <input id="tf-name" type="text" name="name" placeholder="Your name" autocomplete="off" />
+              <input id="tf-name" type="text" name="name" placeholder="Your name" autocomplete="name" required />
             </div>
             <div class="tf-field">
               <label for="tf-email">Email</label>
-              <input id="tf-email" type="email" name="email" placeholder="your@email.com" autocomplete="off" />
+              <input id="tf-email" type="email" name="email" placeholder="your@email.com" autocomplete="email" required />
             </div>
           </div>
           <div class="tf-field tf-full">
             <label for="tf-msg">Message</label>
-            <textarea id="tf-msg" name="message" rows="3" placeholder="Tell me about your expedition..."></textarea>
+            <textarea id="tf-msg" name="message" rows="3" placeholder="Tell me about your expedition..." required></textarea>
           </div>
           <button type="submit" class="tf-submit">Send the scroll</button>
+          <p class="tf-status" id="tfStatus" role="status" aria-live="polite"></p>
         </form>
       </div>
     </div>
@@ -7079,15 +7060,50 @@
   }
 
   if (templeForm) {
+    /* Posts to Netlify Forms in the background so the visitor stays on the
+       page. Falls back to a mailto only if the request fails (e.g. previewing
+       the file locally, where no Netlify endpoint exists). */
+    const status = document.getElementById('tfStatus');
+    const btn    = templeForm.querySelector('.tf-submit');
+
+    const say = (msg, kind) => {
+      if (!status) return;
+      status.textContent = msg;
+      status.className = 'tf-status' + (kind ? ' is-' + kind : '');
+    };
+
     templeForm.addEventListener('submit', e => {
       e.preventDefault();
-      const name    = templeForm.querySelector('[name="name"]').value.trim();
-      const email   = templeForm.querySelector('[name="email"]').value.trim();
-      const message = templeForm.querySelector('[name="message"]').value.trim();
-      if (!name || !email || !message) return;
-      const sub  = encodeURIComponent('Expedition inquiry from ' + name);
-      const body = encodeURIComponent(message + '\n\nFrom: ' + name + '\nReply to: ' + email);
-      window.location.href = 'mailto:silchristiaens@gmail.com?subject=' + sub + '&body=' + body;
+      if (!templeForm.reportValidity()) return;
+
+      const data = new FormData(templeForm);
+      if ((data.get('bot-field') || '').trim()) return;   // spam trap tripped
+
+      const label = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Versturen…'; }
+      say('');
+
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(data).toString()
+      })
+        .then(r => {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          templeForm.reset();
+          say('Bericht verzonden. Ik neem snel contact met je op.', 'ok');
+        })
+        .catch(() => {
+          // no Netlify endpoint (local preview) - hand off to the mail client
+          const name = (data.get('name') || '').trim();
+          const sub  = encodeURIComponent('Expedition inquiry from ' + name);
+          const body = encodeURIComponent(
+            (data.get('message') || '') + '\n\nFrom: ' + name + '\nReply to: ' + (data.get('email') || '')
+          );
+          say('Verbinding mislukt, je mailprogramma wordt geopend.', 'warn');
+          window.location.href = 'mailto:silchristiaens@gmail.com?subject=' + sub + '&body=' + body;
+        })
+        .finally(() => { if (btn) { btn.disabled = false; btn.textContent = label; } });
     });
   }
 

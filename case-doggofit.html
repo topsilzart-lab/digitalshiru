@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <title>DoggoFit · Dog Health Tracking · Case Study · Digital Shiru</title>
 <meta name="description" content="Case study: brand and product design for DoggoFit, turning a dog's health data into something owners actually act on." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -221,23 +224,23 @@
   var shots = [
     { f: '01-laptop.jpg',   c: 'Website · For dogs that run, play, and live longer' },
     { f: '02-in-hand.jpg',  c: 'Mobile site in context' },
-    { f: '04-logo.png',     c: 'The DoggoFit mark' },
+    { f: '04-logo.webp',     c: 'The DoggoFit mark' },
     { f: '03-screens.jpg',  c: 'The full screen system, laid out side by side' },
-    { f: '05-app-1.png',    c: 'App · home' },
-    { f: '06-app-2.png',    c: 'App · tracking' },
-    { f: '07-app-3.png',    c: 'App · benefits' },
-    { f: '08-app-4.png',    c: 'App · plans' },
-    { f: '09-card-1.png',   c: 'Tracking card' },
-    { f: '10-card-2.png',   c: 'Tracking card' },
-    { f: '11-card-3.png',   c: 'Tracking card' },
-    { f: '12-card-4.png',   c: 'Tracking card' }
+    { f: '05-app-1.jpg',    c: 'App · home' },
+    { f: '06-app-2.jpg',    c: 'App · tracking' },
+    { f: '07-app-3.jpg',    c: 'App · benefits' },
+    { f: '08-app-4.jpg',    c: 'App · plans' },
+    { f: '09-card-1.webp',   c: 'Tracking card' },
+    { f: '10-card-2.webp',   c: 'Tracking card' },
+    { f: '11-card-3.webp',   c: 'Tracking card' },
+    { f: '12-card-4.webp',   c: 'Tracking card' }
   ];
   var groups = {
     'g-vision':   ['01-laptop.jpg'],
-    'g-identity': ['04-logo.png', '02-in-hand.jpg'],
+    'g-identity': ['04-logo.webp', '02-in-hand.jpg'],
     'g-system':   ['03-screens.jpg'],
-    'g-app':      ['05-app-1.png', '06-app-2.png', '07-app-3.png', '08-app-4.png'],
-    'g-cards':    ['09-card-1.png', '10-card-2.png', '11-card-3.png', '12-card-4.png']
+    'g-app':      ['05-app-1.jpg', '06-app-2.jpg', '07-app-3.jpg', '08-app-4.jpg'],
+    'g-cards':    ['09-card-1.webp', '10-card-2.webp', '11-card-3.webp', '12-card-4.webp']
   };
   var byFile = {};
   shots.forEach(function (s, i) { byFile[s.f] = { i: i, c: s.c }; });
@@ -246,7 +249,7 @@
     var meta = byFile[file] || { i: 0, c: '' };
     var fig = document.createElement('figure');
     var box = document.createElement('div');
-    box.className = 'shot' + (file === '04-logo.png' ? ' logo-box' : '');
+    box.className = 'shot' + (file === '04-logo.webp' ? ' logo-box' : '');
     box.dataset.i = meta.i;
     var img = document.createElement('img');
     img.src = DIR + file;

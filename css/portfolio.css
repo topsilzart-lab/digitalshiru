@@ -829,3 +829,17 @@ footer .fc-coords span { color: var(--paper-muted); opacity: 0.95; }
 .treasure-reveal.is-lit { opacity: 0.82; transition: opacity .28s ease; }
 /* No cursor to follow on touch, and nothing to reveal */
 @media (hover: none) { .treasure-reveal { display: none; } }
+
+/* ---- Contact form: Netlify honeypot + submit status ---- */
+.tf-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.tf-status {
+  margin: 12px 0 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 12.5px;
+  line-height: 1.5;
+  min-height: 1.2em;
+  color: var(--paper-muted);
+}
+.tf-status.is-ok   { color: #2e6b3f; font-weight: 500; }
+.tf-status.is-warn { color: #8a5a1c; }
+.tf-submit[disabled] { opacity: 0.6; cursor: progress; }

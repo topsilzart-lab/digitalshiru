@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 38" width="38" height="38">
+  <!-- Digital Shiru compass emblem, simplified for favicon sizes.
+       The nav logo's dashed inner ring and intermediate ticks turn to mush at
+       16px, so this keeps only the shapes that survive: a bold ring, a strong
+       north needle and the ember pivot. Dark disc keeps the gold readable on
+       light browser tabs. -->
+  <circle cx="19" cy="19" r="19" fill="#080d0a"/>
+  <circle cx="19" cy="19" r="15" fill="none" stroke="#e8b865" stroke-width="2.4"/>
+  <!-- Needle: north gold, south stone -->
+  <path d="M19 6.5 L22.4 19 L19 21.4 L15.6 19 Z" fill="#e8b865"/>
+  <path d="M19 31.5 L22.4 19 L19 21.4 L15.6 19 Z" fill="#6b6354"/>
+  <!-- Cardinal ticks, heavy enough to read when tiny -->
+  <g stroke="#e8b865" stroke-width="2.6" stroke-linecap="round">
+    <line x1="19" y1="1.9" x2="19" y2="4.4"/>
+    <line x1="36.1" y1="19" x2="33.6" y2="19"/>
+    <line x1="19" y1="36.1" x2="19" y2="33.6"/>
+    <line x1="1.9" y1="19" x2="4.4" y2="19"/>
+  </g>
+  <circle cx="19" cy="19" r="2.9" fill="#d4763a"/>
+</svg>
